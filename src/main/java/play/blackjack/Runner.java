@@ -24,9 +24,7 @@ public class Runner implements CommandLineRunner {
     @Override
     public void run(String... args) {
         Player player = new Player("nasser@gmail.com", 1000, encoder.encode("user"));
-        playerService.setPlayer(player);
-        playerService.save();
-
+        playerService.save(player);
     }
 
 }
