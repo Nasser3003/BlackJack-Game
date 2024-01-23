@@ -1,7 +1,7 @@
-package play.service.game;
+package play.blackjack;
 
 import lombok.Data;
-import play.service.models.Player;
+import play.blackjack.models.Player;
 
 import java.util.ArrayList;
 import java.util.List;
