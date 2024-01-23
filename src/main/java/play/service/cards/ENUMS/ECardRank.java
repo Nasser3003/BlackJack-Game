@@ -1,4 +1,4 @@
-package play.blackjack.cards.ENUMS;
+package play.service.cards.ENUMS;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

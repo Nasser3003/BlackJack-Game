@@ -1,11 +1,11 @@
-package play.blackjack.cards;
+package play.service.cards;
 
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import play.blackjack.cards.ENUMS.ECardRank;
-import play.blackjack.cards.ENUMS.ECardType;
+import play.service.cards.ENUMS.ECardRank;
+import play.service.cards.ENUMS.ECardType;
 
 import java.util.*;
 

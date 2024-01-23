@@ -1,23 +1,37 @@
-package play.blackjack;
+package play.service.models;
 
+import javax.persistence.*;
 import lombok.Data;
-import play.blackjack.cards.Card;
+import lombok.NoArgsConstructor;
+import play.service.cards.Card;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Entity
+@NoArgsConstructor
 public class Player {
 
-    private String name;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    private String email;
     private int money;
     private int earnings;
 
-    List<Card> hand = new ArrayList<>(2);
-    List<Card> splitHand = new ArrayList<>(2);
+    @OneToMany(mappedBy = "player")
+    private List<Logs> logs = new ArrayList<>();
 
-    public Player(String name, int money) {
-        this.name = name;
+    @Transient
+    private List<Card> hand = new ArrayList<>(2);
+    @Transient
+    private List<Card> splitHand = new ArrayList<>(2);
+
+    public Player(String email, int money) {
+        this.email = email;
         this.money = money;
     }
 
@@ -44,9 +58,7 @@ public class Player {
             hand.remove(1);
         }
     }
-    public void stay(){
-
-    }
+    public void stay(){}
     private int calculateHandValue(List<Card> hand) {
         int sum = 0;
 
