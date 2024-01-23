@@ -1,4 +1,4 @@
-package play.blackjack.ENUMS;
+package play.blackjack.cards.ENUMS;
 
 public enum ECardType {
     SPADES,

@@ -4,8 +4,8 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import play.blackjack.ENUMS.ECardRank;
-import play.blackjack.ENUMS.ECardType;
+import play.blackjack.cards.ENUMS.ECardRank;
+import play.blackjack.cards.ENUMS.ECardType;
 
 import java.util.*;
 
