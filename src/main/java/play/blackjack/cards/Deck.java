@@ -2,12 +2,12 @@ package play.blackjack.cards;
 
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
 import lombok.Setter;
 import play.blackjack.ENUMS.ECardRank;
 import play.blackjack.ENUMS.ECardType;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Data
 public class Deck {
@@ -32,18 +32,35 @@ public class Deck {
     private int setsInDeck;
 
     @Setter(AccessLevel.NONE)
-    private List<Card> deck = new ArrayList<>(52 * setsInDeck);
+    private ArrayDeque<Card> deck = new ArrayDeque<>(setsInDeck * 52);
 
-    // Initialize the Deck
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)
+    private List<Card> tempList = new ArrayList<>(setsInDeck * 52);
+
+    // Deck Initialized and shuffled
     public Deck(int setsInDeck) {
         this.setsInDeck = setsInDeck;
 
         for (int i = 0; i < setsInDeck; i++) {
             for (ECardType type : types) {
                 for (ECardRank rank : ranks) {
-                    deck.add(new Card(rank, type));
+                    tempList.add(new Card(rank, type));
                 }
             }
         }
+        Collections.shuffle(tempList);
+        deck.addAll(tempList);
+    }
+
+    public void shuffle() {
+        Collections.shuffle(tempList);
+        deck.addAll(tempList);
+    }
+
+    public Card deal() {
+        if (deck.isEmpty())
+            shuffle();
+        return deck.pollLast();
     }
 }
