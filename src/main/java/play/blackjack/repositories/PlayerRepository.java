@@ -1,7 +1,9 @@
-package play.service.repositories;
+package play.blackjack.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import play.service.models.Player;
+import org.springframework.stereotype.Repository;
+import play.blackjack.models.Player;
 
+@Repository
 public interface PlayerRepository extends JpaRepository<Player, Long> {
 }

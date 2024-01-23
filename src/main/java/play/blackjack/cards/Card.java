@@ -1,8 +1,8 @@
-package play.service.cards;
+package play.blackjack.cards;
 
 import lombok.Data;
-import play.service.cards.ENUMS.ECardRank;
-import play.service.cards.ENUMS.ECardType;
+import play.blackjack.cards.ENUMS.ECardRank;
+import play.blackjack.cards.ENUMS.ECardType;
 
 @Data
 public class Card {

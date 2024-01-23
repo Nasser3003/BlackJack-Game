@@ -1,9 +1,9 @@
-package play.service.models;
+package play.blackjack.models;
 
 import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import play.service.cards.Card;
+import play.blackjack.cards.Card;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +18,12 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(unique = true)
     private String email;
+
     private int money;
     private int earnings;
+    private String password;
 
     @OneToMany(mappedBy = "player")
     private List<Logs> logs = new ArrayList<>();
@@ -30,9 +33,10 @@ public class Player {
     @Transient
     private List<Card> splitHand = new ArrayList<>(2);
 
-    public Player(String email, int money) {
+    public Player(String email, int money, String password) {
         this.email = email;
         this.money = money;
+        this.password = password;
     }
 
     public void hit(Card card) {
@@ -47,18 +51,14 @@ public class Player {
     public int calculateHandValueSplit() {
         return calculateHandValue(splitHand);
     }
+    public void split() {
+        splitHand.add(hand.get(1));
+        hand.remove(1);
+    }
+    public void stay(){}
     private void hit(List<Card> hand, Card card) {
         hand.add(card);
     }
-    public void split() {
-        if (hand.get(0).getRankAsInt() == hand.get(1).getRankAsInt())
-            System.out.println("Cant split, you dont have a pair");
-        else {
-            splitHand.add(hand.get(1));
-            hand.remove(1);
-        }
-    }
-    public void stay(){}
     private int calculateHandValue(List<Card> hand) {
         int sum = 0;
 
