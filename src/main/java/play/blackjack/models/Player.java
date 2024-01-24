@@ -24,6 +24,7 @@ public class Player {
     private int money;
     private int earnings;
     private String password;
+    private boolean isHidden = true;
 
     @OneToMany(mappedBy = "player")
     private List<Logs> logs = new ArrayList<>();
@@ -52,8 +53,11 @@ public class Player {
         return calculateHandValue(splitHand);
     }
     public void split() {
-        splitHand.add(hand.get(1));
+        Card c = hand.get(1);
         hand.remove(1);
+
+        c.setHidden(false);
+        splitHand.add(c);
     }
     public void stay(){}
     private void hit(List<Card> hand, Card card) {
