@@ -1,10 +1,10 @@
-package play.blackjack.services;
+package play.blackjack.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import play.blackjack.models.Logs;
-import play.blackjack.repositories.LogRepository;
+import play.blackjack.model.Logs;
+import play.blackjack.repository.LogRepository;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))

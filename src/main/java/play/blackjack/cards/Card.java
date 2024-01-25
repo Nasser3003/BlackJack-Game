@@ -8,13 +8,12 @@ import play.blackjack.cards.ENUMS.ECardType;
 public class Card {
     private ECardRank rank;
     private ECardType cardType;
+    private boolean isHidden = true;
 
     public Card(ECardRank rank, ECardType cardType) {
         this.rank = rank;
         this.cardType = cardType;
     }
-
-    private boolean isHidden;
 
     public int getRankAsInt() {
         return rank.getValue();
