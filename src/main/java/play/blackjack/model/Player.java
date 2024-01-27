@@ -62,6 +62,7 @@ public class Player {
         splitHand.add(c);
     }
     public void stay(){}
+    public void staySplit(){}
     private void hit(List<Card> hand, Card card) {
         hand.add(card);
     }

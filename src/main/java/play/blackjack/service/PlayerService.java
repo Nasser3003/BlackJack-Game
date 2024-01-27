@@ -3,10 +3,12 @@ package play.blackjack.service;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import play.blackjack.cards.Card;
 import play.blackjack.cards.Deck;
 import play.blackjack.model.Player;
 import play.blackjack.repository.PlayerRepository;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -42,7 +44,15 @@ public class PlayerService {
     }
     public void stay(Player player) {
         player.stay();
-        StringBuilder a = new StringBuilder();
+    }
+    public void staySplit(Player player) {
+        player.staySplit();
+    }
+    public List<Card> seeHand(Player player) {
+        return player.getHand();
+    }
+    public List<Card> seeSplitHand(Player player) {
+        return player.getSplitHand();
     }
 }
 // fix error handling in Save
