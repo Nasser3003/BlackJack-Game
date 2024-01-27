@@ -24,11 +24,15 @@ public class Player {
     private String username;
 
     private long money;
-    private int earnings;
+    private long earnings;
     private String password;
 
     @OneToMany(mappedBy = "player")
     private List<Logs> logs = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "casino_id")
+    private Casino casino;
 
     @Transient
     private List<Card> hand = new ArrayList<>(2);
@@ -63,6 +67,10 @@ public class Player {
     }
     public void stay(){}
     public void staySplit(){}
+    public void adjustMoneyAndEarnings(long value) {
+        money =+ value;
+        earnings =+ value;
+    }
     private void hit(List<Card> hand, Card card) {
         hand.add(card);
     }

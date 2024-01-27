@@ -54,5 +54,12 @@ public class PlayerService {
     public List<Card> seeSplitHand(Player player) {
         return player.getSplitHand();
     }
+    public long getMoney(Player player) {
+        return player.getMoney();
+    }
+    public void adjustMoneyAndEarnings(Player player, long value) {
+        player.adjustMoneyAndEarnings(value);
+    }
+
 }
 // fix error handling in Save

@@ -15,9 +15,24 @@ public class Casino {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private int capital;
-    private int revenue;
+    private String name;
+    private long capital;
+    private long revenue;
+
+    public Casino(String name, long capital) {
+        this.name = name;
+        this.capital = capital;
+    }
 
     @OneToMany(mappedBy = "casino")
-    List<Logs> logs;
+    private List<Logs> logs;
+
+    @OneToMany(mappedBy = "casino")
+    private List<Player> players;
+
+    public void adjustRevenueAndCapital(long value) {
+        revenue =+ value;
+        capital =+ value;
+    }
+
 }

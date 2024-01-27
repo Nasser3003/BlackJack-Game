@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import play.blackjack.cards.Card;
 import play.blackjack.cards.Deck;
+import play.blackjack.model.Casino;
 import play.blackjack.model.Player;
 import play.blackjack.service.CasinoService;
 import play.blackjack.service.LogService;
@@ -32,6 +33,7 @@ public class Engine {
     private Deck deck = new Deck(4);
     private List<Player> players = new ArrayList<>();
     private Player player;
+    private Casino casino;
 
     public void addPlayer(Player player) {
         players.add(player);
@@ -39,27 +41,20 @@ public class Engine {
     public void removePlayer(Player player) {
         players.remove(player);
     }
-    public String play() {
+    public boolean play() {
         firstHandInGame();
         Scanner scanner = new Scanner(System.in);
+
+        scanner.close();
+        return false;
+    }
+    private boolean playerMove(Scanner scanner) {
         int userChoice;
         do {
-            System.out.print(
-                    "1: Hit\n" +
-                    "2: Hit Split Hand\n" +
-                    "3: Split\n" +
-                    "4: Stay\n" +
-                    "5: Stay Split Hand\n" +
-                    "6: See Hand\n" +
-                    "7: See Split Hand\n" +
-                    "8: Calculate Hand Value\n" +
-                    "9: Calculate Hand Value Split\n" +
-                    "Enter your choice (1-9): "
-            );
-
+            printChoices();
             while (!scanner.hasNextInt()) {
                 System.out.print("Enter valid input\n" +
-                        "Enter your choice (1-7): ");
+                        "Enter your choice (1-9): ");
                 scanner.next();
             }
             userChoice = scanner.nextInt();
@@ -77,9 +72,21 @@ public class Engine {
             case 8: calculateHandValue(); break;
             case 9: calculateHandValueSplit();
         }
-        System.out.println(player.getHand());
-        scanner.close();
-        return null;
+        return false;
+    }
+    private void printChoices() {
+        System.out.print(
+                "1: Hit\n" +
+                        "2: Hit Split Hand\n" +
+                        "3: Split\n" +
+                        "4: Stay\n" +
+                        "5: Stay Split Hand\n" +
+                        "6: See Hand\n" +
+                        "7: See Split Hand\n" +
+                        "8: Calculate Hand Value\n" +
+                        "9: Calculate Hand Value Split\n" +
+                        "Enter your choice (1-9): "
+        );
     }
     private void firstHandInGame() {
         boolean isHidden = true;
@@ -120,5 +127,25 @@ public class Engine {
     private void calculateHandValueSplit() {
         System.out.println(playerService.calculateHandSplit(player));
     }
+    private void updatePlayer(long bet, boolean playerWon) {
+        long value = won ? bet : -bet;
+        playerService.adjustMoneyAndEarnings(player, value);
+    }
+    private void updateCasino(long bet, boolean playerWon) {
+        long value = won ? bet : -bet;
+        casinoService.adjustRevenueAndCapital(casino, value);
+    }
+    private void saveLog(long bet, boolean playerWon) {
+        logService.generateAndSaveLog(player, casino, bet, playerWon);
+    }
+//    private long getMoney() {
+//        return playerService.getMoney(player);
+//    }
+//    private void saveLog(long intialMoney) {
+//        logService.generateLog(player);
+//    }
 }
+// take care of logging get initial money, after losing or winning calculate.
+// fix relationship between Logs Casino and Player mainly the casino and log.. and how you gonna pass the casino?
+// should i remove and make it implicit as there is only 1 casino?
 
