@@ -1,4 +1,4 @@
-package play.blackjack.services;
+package play.blackjack.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,10 +1,10 @@
-package play.blackjack.models;
+package play.blackjack.model;
 
-import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import play.blackjack.cards.Card;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +20,12 @@ public class Player {
 
     @Column(unique = true)
     private String email;
+    @Column(unique = true)
+    private String username;
 
-    private int money;
+    private long money;
     private int earnings;
     private String password;
-    private boolean isHidden = true;
 
     @OneToMany(mappedBy = "player")
     private List<Logs> logs = new ArrayList<>();
@@ -34,8 +35,9 @@ public class Player {
     @Transient
     private List<Card> splitHand = new ArrayList<>(2);
 
-    public Player(String email, int money, String password) {
+    public Player(String email, long money, String password) {
         this.email = email;
+        this.username = email;
         this.money = money;
         this.password = password;
     }

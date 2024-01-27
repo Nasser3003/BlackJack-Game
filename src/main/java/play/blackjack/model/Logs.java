@@ -1,4 +1,4 @@
-package play.blackjack.models;
+package play.blackjack.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
