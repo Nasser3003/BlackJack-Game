@@ -1,5 +1,6 @@
 package play.blackjack.model;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import play.blackjack.cards.Card;
@@ -35,6 +36,7 @@ public class Player {
     @Transient
     private List<Card> splitHand = new ArrayList<>(2);
 
+    @Builder
     public Player(String email, long money, String password) {
         this.email = email;
         this.username = email;
