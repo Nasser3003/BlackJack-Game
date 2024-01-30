@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +22,7 @@ export class RegisterComponent {
   registerForm: FormGroup = this.formBuilder.group({
     email: ['', Validators.required],
     password: ['', Validators.required],
-    cash: ['', Validators.required]
+    money: ['', Validators.required]
   });
 
   register(): void {

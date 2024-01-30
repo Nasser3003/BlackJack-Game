@@ -1,15 +1,15 @@
-<form>
+<form [formGroup]="registerForm" (ngSubmit)="register()" id="register">
     <div class="mb-3" style="margin-top: 30px;">
       <label for="email" class="form-label">Email address</label>
-      <input type="email" class="form-control" id="email">
+      <input type="email" class="form-control" formControlName="email" id="email">
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Password</label>
-      <input type="password" class="form-control" id="password">
+      <input type="password" class="form-control" formControlName="password" id="password">
     </div>
     <div class="mb-3">
-        <label for="cash" class="form-label">Starting Cash</label>
-        <input type="number" class="form-control" id="cash">
+        <label for="money" class="form-label">Starting Cash</label>
+        <input type="number" class="form-control" formControlName="money" id="money">
     </div>
     <button type="submit" class="btn btn-primary">Register</button>
 </form>

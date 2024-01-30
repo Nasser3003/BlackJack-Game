@@ -36,6 +36,7 @@ public class Player {
     @Transient
     private List<Card> splitHand = new ArrayList<>(2);
 
+    @Builder
     public Player(String email, long money, String password) {
         this.email = email;
         this.username = email;
