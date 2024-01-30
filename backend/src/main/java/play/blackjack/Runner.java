@@ -35,7 +35,7 @@ public class Runner implements CommandLineRunner {
         engine.addPlayer(house);
 
         // play will return if they won or lose
-        // if they wanna play again we relaunch.
+        // if they want to play again we relaunch.
         engine.play();
     }
 }

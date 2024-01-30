@@ -6,6 +6,9 @@ target/
 ### VS Code ###
 .vscode/
 
+### temp files ###
+.temp/
+
 ### IntelliJ IDEA ###
 .idea/
 .idea/modules.xml
