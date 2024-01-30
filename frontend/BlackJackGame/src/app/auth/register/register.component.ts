@@ -28,6 +28,7 @@ export class RegisterComponent {
   register(): void {
     if (this.registerForm.valid) {
       this.httpClient.post(`${this.url}/register`, this.registerForm.value).subscribe(() => {});
+      this.router.navigate(["/login"]);
     }
   }
   
