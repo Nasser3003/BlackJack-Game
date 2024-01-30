@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
 
-  url = 'http://localhost:3000/';
+  url = 'http://localhost:3000';
 
   constructor (
     private httpClient: HttpClient,
@@ -26,7 +26,7 @@ export class RegisterComponent {
 
   register(): void {
     if (this.registerForm.valid) {
-      this.httpClient.post(`${this.url}/register`, this.registerForm);
+      this.httpClient.post(`${this.url}/register`, this.registerForm.value).subscribe(() => {});
     }
   }
   

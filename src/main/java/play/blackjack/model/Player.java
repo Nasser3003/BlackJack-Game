@@ -1,5 +1,6 @@
 package play.blackjack.model;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import play.blackjack.cards.Card;
