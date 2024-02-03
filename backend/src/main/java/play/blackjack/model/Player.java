@@ -11,6 +11,7 @@ import java.util.List;
 
 @Data
 @Entity
+@Getters
 @NoArgsConstructor
 public class Player {
 
