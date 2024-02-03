@@ -1,18 +1,21 @@
 package play.blackjack.model;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
 @Data
+@Entity
 @NoArgsConstructor
 public class Casino {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private long id;
 
     private String name;

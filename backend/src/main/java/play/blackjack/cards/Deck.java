@@ -4,11 +4,13 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
 import play.blackjack.cards.ENUMS.ECardRank;
 import play.blackjack.cards.ENUMS.ECardType;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Data
 public class Deck {

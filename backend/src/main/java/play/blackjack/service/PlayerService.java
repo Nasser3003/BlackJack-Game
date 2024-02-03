@@ -31,10 +31,16 @@ public class PlayerService {
         return calculateHandValue(player.getSplitHand());
     }
     public void hit(Player player, Deck deck) {
-        player.hit(deck.deal());
+        if (!player.isPassHand())
+            player.hit(deck.deal());
+        else
+            System.out.println("You already passed your hand");
     }
     public void hitSplit(Player player, Deck deck) {
-        player.hitSplit(deck.deal());
+        if (!player.isPassSplitHand())
+            player.hitSplit(deck.deal());
+        else
+            System.out.println("You Already Passed your 2nd hand");
     }
     public void split(Player player) {
         if (player.getHand().get(0).getRankAsInt() != player.getHand().get(1).getRankAsInt())
@@ -61,6 +67,15 @@ public class PlayerService {
     public void adjustMoneyAndEarnings(Player player, long value) {
         player.adjustMoneyAndEarnings(value);
     }
+    public boolean setBet(Player player, long amount) {
+        if (hasEnoughMoney(player, amount)) {
+            player.setBet(amount);
+            return true;
+        } else {
+            System.out.println("You don't have enough money");
+            return false;
+        }
+    }
     private int calculateHandValue(List<Card> hand) {
         int sum = 0;
 
@@ -83,6 +98,10 @@ public class PlayerService {
 
         return sum;
     }
+    private boolean hasEnoughMoney(Player player, long amount) {
+        return amount < player.getMoney();
+    }
+
 
 }
 // fix error handling in Save

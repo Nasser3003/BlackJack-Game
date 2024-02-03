@@ -1,8 +1,6 @@
 package play.blackjack.model;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import play.blackjack.cards.Card;
 
 import javax.persistence.*;
@@ -16,6 +14,7 @@ public class Player {
 
     @Id
     @Column(name = "id")
+    @Setter(AccessLevel.NONE)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
@@ -41,6 +40,12 @@ public class Player {
     private List<Card> splitHand = new ArrayList<>(2);
     @Transient
     private long bet;
+    @Transient
+    private boolean passHand;
+    @Transient
+    private boolean passSplitHand = true;
+    @Transient
+    private boolean isWon;
 
     @Builder
     public Player(String email, long money, String password) {
@@ -56,14 +61,19 @@ public class Player {
         hit(splitHand, card);
     }
     public void split() {
-        Card c = hand.get(1);
-        hand.remove(1);
+        Card c = hand.get(0);
+        hand.remove(0);
 
         c.setHidden(false);
         splitHand.add(c);
+        passSplitHand = false;
     }
-    public void stay(){}
-    public void staySplit(){}
+    public void stay() {
+        passHand = true;
+    }
+    public void staySplit() {
+        passSplitHand = true;
+    }
     public void adjustMoneyAndEarnings(long value) {
         money += value;
         earnings += value;

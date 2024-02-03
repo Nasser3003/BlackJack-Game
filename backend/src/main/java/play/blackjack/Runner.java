@@ -7,7 +7,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import play.blackjack.model.Casino;
-import play.blackjack.model.Logs;
 import play.blackjack.model.Player;
 import play.blackjack.repository.CasinoRepository;
 import play.blackjack.repository.LogRepository;
@@ -27,21 +26,23 @@ public class Runner implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        Player player = new Player("nasser@gmail.com", 1000, encoder.encode("user"));
-        Player house = new Player("house@gmail.com", 1000000, encoder.encode("house"));
+        Player player = Player.builder()
+                .email("nasser@gmail.com").password(encoder.encode("user")).money(1000).build();
+        Player house = Player.builder()
+                .email("house@gmail.com").password(encoder.encode("house")).money(1000000).build();
+
         authenticationService.registerUser(player);
         authenticationService.registerUser(house);
 
         engine.addPlayer(player);
         engine.addPlayer(house);
+
         Casino casino = new Casino("Casino 1", 20000000);
         casinoRepository.save(casino);
-        Logs log = new Logs(player, casino);
-        logRepository.save(log);
+
 
         // play will return if they won or lose
         // if they want to play again we relaunch.
-        engine.setPlayer(player);
-        engine.play();
+        engine.start(player);
     }
 }

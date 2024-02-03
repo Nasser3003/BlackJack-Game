@@ -18,6 +18,7 @@ public class Logs {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     @Column(name = "id")
     private Long id;
 

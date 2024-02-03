@@ -14,9 +14,7 @@ import play.blackjack.service.CasinoService;
 import play.blackjack.service.LogService;
 import play.blackjack.service.PlayerService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 @Data
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -32,7 +30,7 @@ public class Engine {
 
     private Deck deck = new Deck(4);
     private List<Player> players = new ArrayList<>();
-    private Player player;
+    private List<Player> nonPassPlayers;
     private Casino casino;
 
     public void addPlayer(Player player) {
@@ -41,29 +39,46 @@ public class Engine {
     public void removePlayer(Player player) {
         players.remove(player);
     }
-    public boolean play() {
+    public void start(Player theUserPlayer) {
+        kickBrookePlayers();
+        nonPassPlayers = new ArrayList<>(players);
         startRound();
         Scanner scanner = new Scanner(System.in);
-        playerMove(scanner);
-        scanner.close();
-        return false;
-    }
-    private boolean playerMove(Scanner scanner) {
-        int userChoice = getUserInput(scanner);
-        // run functions
-        switch (userChoice) {
-            case 1: hit(); break;
-            case 2: hitSplit(); break;
-            case 3: split(); break;
-            case 4: stay(); break;
-            case 5: staySplit(); break;
-            case 6: seeHand(); break;
-            case 7: seeSplitHand(); break;
-            case 8: calculateHandValue(); break;
-            case 9: calculateHandValueSplit();
+
+        Iterator<Player> iterator = nonPassPlayers.iterator();
+        while (iterator.hasNext()) {
+            Player nonPassPlayer = iterator.next();
+            if (nonPassPlayer.isPassHand() && nonPassPlayer.isPassSplitHand()) iterator.remove();
+            if (nonPassPlayer == theUserPlayer) {
+                playerMove(nonPassPlayer, scanner);
+                if (!theUserPlayer.getSplitHand().isEmpty()) {
+                    System.out.println("Now for the second hand?");
+                    playerMove(nonPassPlayer, scanner);
+                }
+            } else {
+                botPlayerAlgorithm(nonPassPlayer);
+            }
         }
-        return false;
+        scanner.close();
     }
+    private void playerMove(Player player, Scanner scanner) {
+        gameLoop: while (true) {
+            int userChoice = getUserInput(scanner);
+            switch (userChoice) {
+                case 1: hit(player); break;
+                case 2: hitSplit(player); break;
+                case 3: split(player); break;
+                case 4: stay(player); break;
+                case 5: staySplit(player); break;
+                case 6: seeHand(player); break;
+                case 7: seeSplitHand(player); break;
+                case 8: System.out.println(calculateHandValue(player)); break;
+                case 9: System.out.println(calculateHandValueSplit(player)); break;
+                case 10: break gameLoop;
+            }
+        }
+    }
+
     private int getUserInput(Scanner scanner) {
         int userChoice = 0;
         do {
@@ -71,10 +86,10 @@ public class Engine {
             if (scanner.hasNextInt())
                 userChoice = scanner.nextInt();
             scanner.nextLine();
-        } while (userChoice < 1 || userChoice > 9);
+        } while (userChoice < 1 || userChoice > 10);
         return userChoice;
     }
-    private void printChoices() {
+    private static void printChoices() {
         System.out.print(
                         "1: Hit\n" +
                         "2: Hit Split Hand\n" +
@@ -85,6 +100,7 @@ public class Engine {
                         "7: See Split Hand\n" +
                         "8: Calculate Hand Value\n" +
                         "9: Calculate Hand Value Split\n" +
+                        "10: End My Turn" +
                         "Enter your choice (1-9): "
         );
     }
@@ -101,43 +117,64 @@ public class Engine {
             isHidden = false;
         }
     }
-    private void hit() {
+    private void hit(Player player) {
         playerService.hit(player, deck);
     }
-    private void split() {
+    private void split(Player player) {
         playerService.split(player);
     } // after splitting the first hand they get should be hidden.
-    private void hitSplit() {
+    private void hitSplit(Player player) {
         playerService.hitSplit(player, deck);
     }
-    private void stay() {
+    private void stay(Player player) {
         playerService.stay(player);
     }
-    private void staySplit() {
+    private void staySplit(Player player) {
         playerService.staySplit(player);
     }
-    private void seeHand() {
+    private void seeHand(Player player) {
         System.out.println(playerService.seeHand(player));
     }
-    private void seeSplitHand() {
+    private void seeSplitHand(Player player) {
         System.out.println(playerService.seeSplitHand(player));
     }
-    private void calculateHandValue() {
-        System.out.println(playerService.calculateHand(player));
-
+    private int calculateHandValue(Player player) {
+        return playerService.calculateHand(player);
     }
-    private void calculateHandValueSplit() {
-        System.out.println(playerService.calculateHandSplit(player));
+    private int calculateHandValueSplit(Player player) {
+        return playerService.calculateHandSplit(player);
     }
-//    private void updatePlayer(long bet, boolean playerWon) {
-//        long value = won ? bet : -bet;
-//        playerService.adjustMoneyAndEarnings(player, value);
-//    }
-//    private void updateCasino(long bet, boolean playerWon) {
-//        long value = won ? bet : -bet;
-//        casinoService.adjustRevenueAndCapital(casino, value);
-//    }
-    private void saveLog(long bet, boolean playerWon) {
+    private void enterBet(Scanner scanner, Player player, long amount) {
+        long bet = 0;
+        do {
+            System.out.print("Amount to bet: ");
+            if (scanner.hasNextLong())
+                bet = scanner.nextLong();
+            scanner.nextLine();
+        } while (!playerService.setBet(player, bet));
+    }
+    private void kickBrookePlayers() {
+        players.removeIf(player -> player.getMoney() < 1);
+    }
+    private void botPlayerAlgorithm(Player player) {
+        int hand = calculateHandValue(player);
+        Random random = new Random();
+        if (hand < 17 && random.nextBoolean())
+            hit(player);
+        else
+            stay(player);
+    }
+    private void updatePlayer(Player player, long bet) {
+        boolean won = player.isWon();
+        long value = won ? bet : -bet;
+        playerService.adjustMoneyAndEarnings(player, value);
+    }
+    private void updateCasino(Player player, long bet) {
+        boolean won = player.isWon();
+        long value = won ? -bet : bet;
+        casinoService.adjustRevenueAndCapital(casino, value);
+    }
+    private void saveLog(Player player, long bet, boolean playerWon) {
         logService.generateAndSaveLog(player, casino, bet, playerWon);
     }
 //    private long getMoney() {
