@@ -31,8 +31,8 @@ public class Casino {
     private List<Player> players;
 
     public void adjustRevenueAndCapital(long value) {
-        revenue =+ value;
-        capital =+ value;
+        revenue += value;
+        capital += value;
     }
 
 }

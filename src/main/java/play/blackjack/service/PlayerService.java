@@ -8,6 +8,7 @@ import play.blackjack.cards.Deck;
 import play.blackjack.model.Player;
 import play.blackjack.repository.PlayerRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -24,10 +25,10 @@ public class PlayerService {
         throw new NoSuchElementException("Player not found with email: " + email);
     }
     public int calculateHand(Player player) {
-        return player.calculateHandValue();
+        return calculateHandValue(player.getHand());
     }
     public int calculateHandSplit(Player player) {
-        return player.calculateHandValueSplit();
+        return calculateHandValue(player.getSplitHand());
     }
     public void hit(Player player, Deck deck) {
         player.hit(deck.deal());
@@ -59,6 +60,28 @@ public class PlayerService {
     }
     public void adjustMoneyAndEarnings(Player player, long value) {
         player.adjustMoneyAndEarnings(value);
+    }
+    private int calculateHandValue(List<Card> hand) {
+        int sum = 0;
+
+        List<Card> aces = new ArrayList<>();
+
+        // we added all the none-ace cards
+        for (Card c : hand) {
+            if (c.getRankAsInt() != 1)
+                sum += c.getRankAsInt();
+            else
+                aces.add(c);
+        }
+
+        if (aces.isEmpty()) return sum;
+
+        // if there is ace do the logic
+        if ((sum + 11) > 21)
+            for (Card ace : aces)
+                sum += ace.getRankAsInt();
+
+        return sum;
     }
 
 }

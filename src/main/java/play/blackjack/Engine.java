@@ -42,24 +42,14 @@ public class Engine {
         players.remove(player);
     }
     public boolean play() {
-        firstHandInGame();
+        startRound();
         Scanner scanner = new Scanner(System.in);
-
+        playerMove(scanner);
         scanner.close();
         return false;
     }
     private boolean playerMove(Scanner scanner) {
-        int userChoice;
-        do {
-            printChoices();
-            while (!scanner.hasNextInt()) {
-                System.out.print("Enter valid input\n" +
-                        "Enter your choice (1-9): ");
-                scanner.next();
-            }
-            userChoice = scanner.nextInt();
-        } while (userChoice < 1 || userChoice > 9);
-
+        int userChoice = getUserInput(scanner);
         // run functions
         switch (userChoice) {
             case 1: hit(); break;
@@ -74,9 +64,19 @@ public class Engine {
         }
         return false;
     }
+    private int getUserInput(Scanner scanner) {
+        int userChoice = 0;
+        do {
+            printChoices();
+            if (scanner.hasNextInt())
+                userChoice = scanner.nextInt();
+            scanner.nextLine();
+        } while (userChoice < 1 || userChoice > 9);
+        return userChoice;
+    }
     private void printChoices() {
         System.out.print(
-                "1: Hit\n" +
+                        "1: Hit\n" +
                         "2: Hit Split Hand\n" +
                         "3: Split\n" +
                         "4: Stay\n" +
@@ -88,7 +88,9 @@ public class Engine {
                         "Enter your choice (1-9): "
         );
     }
-    private void firstHandInGame() {
+
+    // initialize the round by giving each player 2 cards, the first card is hidden
+    private void startRound() {
         boolean isHidden = true;
         for (int i = 0; i < 2; i++) {
             for (Player p : players) {
@@ -104,7 +106,7 @@ public class Engine {
     }
     private void split() {
         playerService.split(player);
-    }
+    } // after splitting the first hand they get should be hidden.
     private void hitSplit() {
         playerService.hitSplit(player, deck);
     }
@@ -127,25 +129,25 @@ public class Engine {
     private void calculateHandValueSplit() {
         System.out.println(playerService.calculateHandSplit(player));
     }
-    private void updatePlayer(long bet, boolean playerWon) {
-        long value = won ? bet : -bet;
-        playerService.adjustMoneyAndEarnings(player, value);
-    }
-    private void updateCasino(long bet, boolean playerWon) {
-        long value = won ? bet : -bet;
-        casinoService.adjustRevenueAndCapital(casino, value);
-    }
+//    private void updatePlayer(long bet, boolean playerWon) {
+//        long value = won ? bet : -bet;
+//        playerService.adjustMoneyAndEarnings(player, value);
+//    }
+//    private void updateCasino(long bet, boolean playerWon) {
+//        long value = won ? bet : -bet;
+//        casinoService.adjustRevenueAndCapital(casino, value);
+//    }
     private void saveLog(long bet, boolean playerWon) {
         logService.generateAndSaveLog(player, casino, bet, playerWon);
     }
 //    private long getMoney() {
 //        return playerService.getMoney(player);
 //    }
-//    private void saveLog(long intialMoney) {
+//    private void saveLog(long initialMoney) {
 //        logService.generateLog(player);
 //    }
 }
 // take care of logging get initial money, after losing or winning calculate.
-// fix relationship between Logs Casino and Player mainly the casino and log.. and how you gonna pass the casino?
-// should i remove and make it implicit as there is only 1 casino?
+// fix relationship between Logs Casino and Player mainly the casino and log. and how you gonna pass the casino?
+// should I remove and make it implicit as there is only 1 casino?
 

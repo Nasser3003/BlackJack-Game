@@ -38,6 +38,8 @@ public class Player {
     private List<Card> hand = new ArrayList<>(2);
     @Transient
     private List<Card> splitHand = new ArrayList<>(2);
+    @Transient
+    private long bet;
 
     public Player(String email, long money, String password) {
         this.email = email;
@@ -45,18 +47,11 @@ public class Player {
         this.money = money;
         this.password = password;
     }
-
     public void hit(Card card) {
         hit(hand, card);
     }
     public void hitSplit(Card card) {
         hit(splitHand, card);
-    }
-    public int calculateHandValue() {
-        return calculateHandValue(hand);
-    }
-    public int calculateHandValueSplit() {
-        return calculateHandValue(splitHand);
     }
     public void split() {
         Card c = hand.get(1);
@@ -68,32 +63,10 @@ public class Player {
     public void stay(){}
     public void staySplit(){}
     public void adjustMoneyAndEarnings(long value) {
-        money =+ value;
-        earnings =+ value;
+        money += value;
+        earnings += value;
     }
     private void hit(List<Card> hand, Card card) {
         hand.add(card);
-    }
-    private int calculateHandValue(List<Card> hand) {
-        int sum = 0;
-
-        List<Card> aces = new ArrayList<>();
-
-        // we added all the none-ace cards
-        for (Card c : hand) {
-            if (c.getRankAsInt() != 1)
-                sum += c.getRankAsInt();
-            else
-                aces.add(c);
-        }
-
-        if (aces.isEmpty()) return sum;
-
-        // if there is ace do the logic
-        if ((sum + 11) > 21)
-            for (Card ace : aces)
-                 sum += ace.getRankAsInt();
-
-        return sum;
     }
 }
