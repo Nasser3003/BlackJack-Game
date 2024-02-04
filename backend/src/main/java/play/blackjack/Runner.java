@@ -13,6 +13,8 @@ import play.blackjack.repository.LogRepository;
 import play.blackjack.service.AuthenticationService;
 import play.blackjack.service.PlayerService;
 
+import java.util.Scanner;
+
 @NoArgsConstructor
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @Component
@@ -40,9 +42,18 @@ public class Runner implements CommandLineRunner {
         Casino casino = new Casino("Casino 1", 20000000);
         casinoRepository.save(casino);
 
-
         // play will return if they won or lose
         // if they want to play again we relaunch.
-        engine.start(player);
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.print("Do you want to play? (Press Enter to continue, any other key to exit): ");
+            if (!scanner.nextLine().isEmpty()) {
+                break;
+            }
+            engine.start(player);
+        }
+        scanner.close();
+        System.exit(0);
     }
 }

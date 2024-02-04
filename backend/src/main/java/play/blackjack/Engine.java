@@ -72,8 +72,8 @@ public class Engine {
                 case 5: staySplit(player); break;
                 case 6: seeHand(player); break;
                 case 7: seeSplitHand(player); break;
-                case 8: System.out.println(calculateHandValue(player)); break;
-                case 9: System.out.println(calculateHandValueSplit(player)); break;
+                case 8: System.out.println("\nYour Hand Value: " + calculateHandValue(player)); break;
+                case 9: System.out.println("\nYour Split Hand Value: " + calculateSplitHandValue(player)); break;
                 case 10: break gameLoop;
             }
         }
@@ -91,7 +91,7 @@ public class Engine {
     }
     private static void printChoices() {
         System.out.print(
-                        "1: Hit\n" +
+                        "\n1: Hit\n" +
                         "2: Hit Split Hand\n" +
                         "3: Split\n" +
                         "4: Stay\n" +
@@ -100,14 +100,15 @@ public class Engine {
                         "7: See Split Hand\n" +
                         "8: Calculate Hand Value\n" +
                         "9: Calculate Hand Value Split\n" +
-                        "10: End My Turn" +
-                        "Enter your choice (1-9): "
+                        "10: End My Turn\n" +
+                        "Enter your choice (1-10): "
         );
     }
 
     // initialize the round by giving each player 2 cards, the first card is hidden
     private void startRound() {
         boolean isHidden = true;
+
         for (int i = 0; i < 2; i++) {
             for (Player p : players) {
                 Card c = deck.deal();
@@ -119,13 +120,25 @@ public class Engine {
     }
     private void hit(Player player) {
         playerService.hit(player, deck);
+        int handValue = calculateHandValue(player);
+
+        if (handValue > 21) {
+            stay(player);
+            System.out.println("You have exceeded 21 with cards valued at " + handValue);
+        }
+    }
+    private void hitSplit(Player player) {
+        playerService.hitSplit(player, deck);
+        int handValue = calculateSplitHandValue(player);
+
+        if (handValue > 21) {
+            stay(player);
+            System.out.println("You have exceeded 21 with cards valued at " + handValue);
+        }
     }
     private void split(Player player) {
         playerService.split(player);
     } // after splitting the first hand they get should be hidden.
-    private void hitSplit(Player player) {
-        playerService.hitSplit(player, deck);
-    }
     private void stay(Player player) {
         playerService.stay(player);
     }
@@ -141,7 +154,7 @@ public class Engine {
     private int calculateHandValue(Player player) {
         return playerService.calculateHand(player);
     }
-    private int calculateHandValueSplit(Player player) {
+    private int calculateSplitHandValue(Player player) {
         return playerService.calculateHandSplit(player);
     }
     private void enterBet(Scanner scanner, Player player, long amount) {
@@ -177,6 +190,7 @@ public class Engine {
     private void saveLog(Player player, long bet, boolean playerWon) {
         logService.generateAndSaveLog(player, casino, bet, playerWon);
     }
+
 //    private long getMoney() {
 //        return playerService.getMoney(player);
 //    }

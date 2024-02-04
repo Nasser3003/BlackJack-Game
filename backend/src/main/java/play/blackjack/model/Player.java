@@ -55,15 +55,17 @@ public class Player {
         this.password = password;
     }
     public void hit(Card card) {
+        if (playedSplitSoNextCardInHandIsHidden())
+            card.setHidden(true);
         hit(hand, card);
     }
     public void hitSplit(Card card) {
+        if (playedSplitSoNextCardInSplitHandIsHidden())
+            card.setHidden(true);
         hit(splitHand, card);
     }
     public void split() {
-        Card c = hand.get(0);
-        hand.remove(0);
-
+        Card c = hand.remove(0);
         c.setHidden(false);
         splitHand.add(c);
         passSplitHand = false;
@@ -80,5 +82,11 @@ public class Player {
     }
     private void hit(List<Card> hand, Card card) {
         hand.add(card);
+    }
+    private boolean playedSplitSoNextCardInHandIsHidden() {
+        return getSplitHand().size() == 1;
+    }
+    private boolean playedSplitSoNextCardInSplitHandIsHidden() {
+        return getHand().size() == 1 && !getSplitHand().isEmpty();
     }
 }

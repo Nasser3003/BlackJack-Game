@@ -31,16 +31,18 @@ public class PlayerService {
         return calculateHandValue(player.getSplitHand());
     }
     public void hit(Player player, Deck deck) {
-        if (!player.isPassHand())
+        if (!player.isPassHand()) {
             player.hit(deck.deal());
+
+        }
         else
-            System.out.println("You already passed your hand");
+            System.out.println("You can't request card for your Hand");
     }
     public void hitSplit(Player player, Deck deck) {
         if (!player.isPassSplitHand())
             player.hitSplit(deck.deal());
         else
-            System.out.println("You Already Passed your 2nd hand");
+            System.out.println("You can't request card for your Split Hand");
     }
     public void split(Player player) {
         if (player.getHand().get(0).getRankAsInt() != player.getHand().get(1).getRankAsInt())
@@ -100,6 +102,9 @@ public class PlayerService {
     }
     private boolean hasEnoughMoney(Player player, long amount) {
         return amount < player.getMoney();
+    }
+    private void addMoney(Player player, long amount) {
+        player.setMoney(amount + getMoney(player));
     }
 
 
