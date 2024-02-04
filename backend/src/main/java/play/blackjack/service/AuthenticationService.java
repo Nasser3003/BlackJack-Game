@@ -1,9 +1,6 @@
 package play.blackjack.service;
 
-
 import lombok.AllArgsConstructor;
-
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -23,11 +20,11 @@ public class AuthenticationService {
     private final PlayerRepository playerRepository;
     private final PasswordEncoder encoder;
 
-    public void registerUser(String email, String password, long money) {
+    public void registerUser(String email, String password, long money) throws DuplicateKeyException {
         if (!playerRepository.findByEmail(email).isPresent())
             playerRepository.save(new Player(email, money, encoder.encode(password)));
         else
-            System.out.println(new DuplicateKeyException("Email already taken ERROR in PlayerService Save").getMessage());
+            throw new DuplicateKeyException("Email already taken ERROR in PlayerService Save");
     }
     public void registerUser(Player player) {
         if (!playerRepository.findByEmail(player.getEmail()).isPresent())
@@ -36,16 +33,14 @@ public class AuthenticationService {
             System.out.println(new DuplicateKeyException("Email already taken ERROR in PlayerService Save").getMessage());
     }
 
-    public Player loginUser(String email, String password) {
-        Player player = null;
-        if (playerRepository.findByEmail(email).isPresent()) {
-            player = playerRepository.findByEmail(email).get();
-            if (player.getPassword().equals(encoder.encode(password))) {
-                return player;
-            } else {
-                System.out.println(new InvalidCredentialsException().getMessage());
-            }
+    public Player loginUser(Player player) throws InvalidCredentialsException {
+        Player existingPlayer = null;
+        if (playerRepository.findByEmail(player.getEmail()).isPresent()) {
+            existingPlayer = playerRepository.findByEmail(player.getEmail()).get();
+            if (existingPlayer.getPassword().equals(encoder.encode(player.getPassword()))) {
+                return existingPlayer;
+            } 
         }
-        return null; 
+        throw new InvalidCredentialsException(); 
     }
 }
