@@ -2,10 +2,13 @@ package play.blackjack;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.aspectj.weaver.bcel.BcelPerClauseAspectAdder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import play.blackjack.engine.Engine;
 import play.blackjack.model.Casino;
 import play.blackjack.model.Player;
 import play.blackjack.repository.CasinoRepository;
@@ -13,15 +16,11 @@ import play.blackjack.repository.LogRepository;
 import play.blackjack.service.AuthenticationService;
 import play.blackjack.service.PlayerService;
 
-import java.util.Scanner;
-
 @NoArgsConstructor
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @Component
 public class Runner implements CommandLineRunner {
     private CasinoRepository casinoRepository;
-    private PlayerService playerService;
-    private LogRepository logRepository;
     private PasswordEncoder encoder;
     private AuthenticationService authenticationService;
     private Engine engine;
@@ -44,16 +43,6 @@ public class Runner implements CommandLineRunner {
 
         // play will return if they won or lose
         // if they want to play again we relaunch.
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            System.out.print("Do you want to play? (Press Enter to continue, any other key to exit): ");
-            if (!scanner.nextLine().isEmpty()) {
-                break;
-            }
-            engine.start(player);
-        }
-        scanner.close();
-        System.exit(0);
+        engine.start(player);
     }
 }
