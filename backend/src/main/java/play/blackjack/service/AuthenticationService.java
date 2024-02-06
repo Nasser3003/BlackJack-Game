@@ -37,7 +37,7 @@ public class AuthenticationService {
         Player existingPlayer = null;
         if (playerRepository.findByEmail(player.getEmail()).isPresent()) {
             existingPlayer = playerRepository.findByEmail(player.getEmail()).get();
-            if (existingPlayer.getPassword().equals(encoder.encode(player.getPassword()))) {
+            if (encoder.matches(player.getPassword(), existingPlayer.getPassword())) {
                 return existingPlayer;
             } 
         }

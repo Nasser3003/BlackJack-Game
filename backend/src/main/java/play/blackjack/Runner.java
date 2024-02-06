@@ -35,17 +35,16 @@ public class Runner implements CommandLineRunner {
         // play will return if they won or lose
         // if they want to play again we relaunch.
 
-        try {
-            Thread.sleep(3000);
+        try (Scanner scanner = new Scanner(System.in);) {
+            Thread.sleep(2000);
+
+            clearScreen();
+
+            intro();
+            makeDecision(scanner);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        clearScreen();
-
-        intro();
-        makeDecision();
-
     }
 
     public void intro() {
@@ -53,58 +52,62 @@ public class Runner implements CommandLineRunner {
             "This is a Blackjack Game by Nasser, Carlos, and Sam.\n");
     }
 
-    public void makeDecision() {
-        String response = registerOrLogin();
-        registerOrLoginForms(response); 
+    public void makeDecision(Scanner scanner) {
+        String response = registerOrLogin(scanner);
+        registerOrLoginForms(scanner, response); 
     }
 
-    public String registerOrLogin() {
-        Scanner scanner = new Scanner(System.in);
+    public String registerOrLogin(Scanner scanner) {        
         System.out.println("a) register\n" + "b) login\n");
         System.out.print("> ");
         String response = scanner.nextLine();
-        scanner.close();
         return response;
     }
 
-    public void registerOrLoginForms(String response) {
-        Scanner scanner = new Scanner(System.in);
+    public void registerOrLoginForms(Scanner scanner, String response) {
         if (response.equals("a")) {
-            System.out.print("Registration Form\nEmail: ");
+            clearScreen();
+            System.out.print("Registration Form\n--------------------\nEmail: ");
             String email = scanner.nextLine();
-            System.out.print("\nPassword: ");
+            System.out.print("Password: ");
             String password = scanner.nextLine();
             System.out.print("Starting Cash: ");
             long money = scanner.nextLong();
             scanner.nextLine();
             try {
                 authController.register(new Player(email, money, password));
+                clearScreen();
                 System.out.println("You have registered successfully!");
-                makeDecision();
+                makeDecision(scanner);
             } catch (DuplicateKeyException e) {
                 System.out.println(e.getMessage());
             }
             
         } else if (response.equals("b")) {
-            System.out.print("Email: ");
+            clearScreen();
+            System.out.print("Login Form\n--------------------\nEmail: ");
             String loginEmail = scanner.nextLine();
             System.out.print("Password: ");
             String loginPassword = scanner.nextLine();
             
             try {
                 Player player = authController.login(new Player(loginEmail, loginPassword));
-                Player house = authController.login(new Player("house@gmail.com", "house"));                if (player != null) {
-
-                Engine engine = new Engine();
-                engine.addPlayer(house);
-                engine.addPlayer(player);
-                engine.play();
+                Player house = authController.login(new Player("house@gmail.com", "house"));
+                
+                if (player != null) {
+                    Engine engine = new Engine();
+                    engine.addPlayer(house);
+                    engine.addPlayer(player);
+                    engine.play();
                 } 
             } catch (InvalidCredentialsException e) {
                 System.out.println(e.getMessage());
+            } finally {
+                clearScreen();
+                System.out.println("Please try again.");
+                makeDecision(scanner);
             }
         }
-        scanner.close();
     }
 
     public void clearScreen() {

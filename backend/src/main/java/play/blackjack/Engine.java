@@ -33,6 +33,8 @@ public class Engine {
         players.remove(player);
     }
     public String play() {
+        clearScreen();
+
         boolean isHidden = true;
         for (int i = 0; i < 2; i++) {
             for (Player p : players) {
@@ -70,5 +72,11 @@ public class Engine {
         scanner.close();
         return null;
     }
+
+    public void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
 }
 
