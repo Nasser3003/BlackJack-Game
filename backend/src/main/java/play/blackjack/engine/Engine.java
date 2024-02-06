@@ -53,7 +53,8 @@ public class Engine {
             Iterator<Player> iterator = nonPassPlayers.iterator();
             while (iterator.hasNext()) {
                 Player nonPassPlayer = iterator.next();
-                if (nonPassPlayer.isPassHand() && nonPassPlayer.isPassSplitHand()) iterator.remove();
+                if (nonPassPlayer.isPassHand() && nonPassPlayer.isPassSplitHand())
+                    iterator.remove();
                 if (nonPassPlayer == theUserPlayer) {
                     gameLogic.playerMove(nonPassPlayer, scanner);
                     if (!theUserPlayer.getSplitHand().isEmpty()) {
@@ -64,7 +65,13 @@ public class Engine {
                     botPlayerAlgorithm(nonPassPlayer);
                 }
             }
+            gameLogic.updatePlayersAsWinLoseOrTie(players);
+            postGame.updatePlayersGainsAndLoses(players);
+            postGame.updateCasinoGainsAndLoses(players);
+            postGame.generateAndSaveLogs(players);
+            postGame.flushPlayersGameStats(players);
         }
+
         scanner.close();
         System.exit(0);
     }
@@ -80,20 +87,11 @@ public class Engine {
     private void botPlayerAlgorithm(Player player) {
         int hand = actions.calculateHandValue(player);
         Random random = new Random();
-        if (hand < 17 && random.nextBoolean())
+        if (hand < 18 && random.nextBoolean())
             actions.hit(player);
         else
             actions.stay(player);
     }
 }
-//    private long getMoney() {
-//        return playerService.getMoney(player);
-//    }
-//    private void saveLog(long initialMoney) {
-//        logService.generateLog(player);
-//    }
-
-// take care of logging get initial money, after losing or winning calculate.
-// fix relationship between Logs Casino and Player mainly the casino and log. and how you gonna pass the casino?
-// should I remove and make it implicit as there is only 1 casino?
+// TODO take care of logging get initial money
 

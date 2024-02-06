@@ -9,7 +9,6 @@ import play.blackjack.model.Casino;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class CasinoService {
 
-    // not correct should loop on each player and get if they won or lost and update.
     public void adjustRevenueAndCapital(Casino casino, long value) {
         casino.adjustRevenueAndCapital(value);
     }

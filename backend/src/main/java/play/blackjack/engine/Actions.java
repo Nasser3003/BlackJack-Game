@@ -34,7 +34,7 @@ class Actions {
     }
     void split(Player player) {
         playerService.split(player);
-    } // after splitting the first hand they get should be hidden.
+    }
     void stay(Player player) {
         playerService.stay(player);
     }
@@ -52,5 +52,8 @@ class Actions {
     }
     int calculateSplitHandValue(Player player) {
         return playerService.calculateHandSplit(player);
+    }
+    long getMoney(Player player) {
+        return playerService.getMoney(player);
     }
 }

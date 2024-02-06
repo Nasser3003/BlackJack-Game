@@ -47,10 +47,17 @@ public class PlayerService {
     public void split(Player player) {
         if (player.getHand().get(0).getRankAsInt() != player.getHand().get(1).getRankAsInt())
             System.out.println("Cant split, you dont have a pair");
-        else {
+        else if (getBet(player) > getMoney(player)) {
+
+        } else {
             player.split();
         }
     }
+
+    public long getBet(Player player) {
+        return player.getBet();
+    }
+
     public void stay(Player player) {
         player.stay();
     }
@@ -106,7 +113,8 @@ public class PlayerService {
     private void addMoney(Player player, long amount) {
         player.setMoney(amount + getMoney(player));
     }
-
-
+    public void flushPlayerGameStats(Player player) {
+        player.flushPlayerGameStats();
+    }
 }
-// fix error handling in Save
+// TODO fix error handling in Save

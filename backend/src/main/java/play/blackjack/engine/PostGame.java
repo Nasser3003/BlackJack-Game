@@ -9,6 +9,8 @@ import play.blackjack.service.CasinoService;
 import play.blackjack.service.LogService;
 import play.blackjack.service.PlayerService;
 
+import java.util.List;
+
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @NoArgsConstructor
 @Component
@@ -18,17 +20,40 @@ class PostGame {
     private LogService logService;
     private Engine engine;
 
-    private void updatePlayer(Player player, long bet) {
-        boolean won = player.isWon();
-        long value = won ? bet : -bet;
-        playerService.adjustMoneyAndEarnings(player, value);
+
+    // playerWinLoseValue * getBet if they split and win/lose with main and split hand
+    void updatePlayersGainsAndLoses(List<Player> players) {
+        long value = 0;
+        for (Player p : players) {
+            if (p == playerService.getPlayerByEmail(GameLogic.DEALER_EMAIL))
+                continue;
+            int playerWinLoseValue = p.getIsWonTieLose();
+            if (playerWinLoseValue > 0)
+                value = playerWinLoseValue *  playerService.getMoney(p);
+            else if (playerWinLoseValue < 0)
+                value = playerWinLoseValue * -playerService.getMoney(p);
+            playerService.adjustMoneyAndEarnings(p, value);
+        }
     }
-    private void updateCasino(Player player, long bet) {
-        boolean won = player.isWon();
-        long value = won ? -bet : bet;
-        casinoService.adjustRevenueAndCapital(engine.getCasino(), value);
+
+    void updateCasinoGainsAndLoses(List<Player> players) {
+        players.forEach(p -> {
+            long bet = 0;
+            switch (p.getIsWonTieLose()) {
+                case 1: bet = -playerService.getMoney(p); break;
+                case -1: bet = playerService.getMoney(p);
+            }
+            casinoService.adjustRevenueAndCapital(engine.getCasino(), bet);
+        });
     }
-    private void saveLog(Player player, long bet, boolean playerWon) {
-        logService.generateAndSaveLog(player, engine.getCasino(), bet, playerWon);
+    void generateAndSaveLogs(List<Player> players) {
+        for (Player p : players) {
+            logService.generateAndSaveLog(p, engine.getCasino(), playerService.getBet(p), p.getIsWonTieLose() > 0);
+        }
+    }
+    void flushPlayersGameStats(List<Player> players) {
+        for (Player p : players) {
+            playerService.flushPlayerGameStats(p);
+        }
     }
 }

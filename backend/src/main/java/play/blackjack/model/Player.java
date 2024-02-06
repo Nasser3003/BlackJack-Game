@@ -35,9 +35,9 @@ public class Player {
     private Casino casino;
 
     @Transient
-    private List<Card> hand = new ArrayList<>(2);
+    private List<Card> hand = new ArrayList<>(6);
     @Transient
-    private List<Card> splitHand = new ArrayList<>(2);
+    private List<Card> splitHand = new ArrayList<>(6);
     @Transient
     private long bet;
     @Transient
@@ -45,7 +45,7 @@ public class Player {
     @Transient
     private boolean passSplitHand = true;
     @Transient
-    private boolean isWon;
+    private int isWonTieLose; // 1 for win -1 for lose 0 for tie
 
     @Builder
     public Player(String email, long money, String password) {
@@ -88,5 +88,12 @@ public class Player {
     }
     private boolean playedSplitSoNextCardInSplitHandIsHidden() {
         return getHand().size() == 1 && !getSplitHand().isEmpty();
+    }
+    public void flushPlayerGameStats() {
+        hand = new ArrayList<>(6);
+        splitHand = new ArrayList<>(6);
+        bet = 0;
+        passHand = false;
+        isWonTieLose = 0;
     }
 }
