@@ -3,6 +3,7 @@ package play.blackjack.engine;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 import play.blackjack.cards.Card;
 import play.blackjack.model.Player;
@@ -10,14 +11,15 @@ import play.blackjack.service.AuthenticationService;
 import play.blackjack.utils.PrintDashes;
 
 import java.util.Scanner;
-import java.util.function.Function;
 
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @NoArgsConstructor
 @Component
 class PreGame {
     private Engine engine;
+    private PlayerInput playerInput;
     private AuthenticationService authService;
+
     Player login(Scanner scanner) {
         while (true) {
             PrintDashes.printDashes();
@@ -28,6 +30,20 @@ class PreGame {
             try {
                 return authService.login(email, password);
             } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    void Register(Scanner scanner) {
+        while (true) {
+            PrintDashes.printDashes();
+            String email = playerInput.validateEmail(scanner);
+            String password = playerInput.validatePassword(scanner);
+            long money = playerInput.setInitialMoney(scanner);
+            try {
+                authService.registerUser(email, password, money);
+                break;
+            } catch (DuplicateKeyException e) {
                 System.out.println(e.getMessage());
             }
         }

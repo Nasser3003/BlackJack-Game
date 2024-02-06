@@ -11,7 +11,6 @@ import play.blackjack.model.Player;
 import play.blackjack.repository.PlayerRepository;
 
 import java.util.Optional;
-import java.util.Scanner;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))

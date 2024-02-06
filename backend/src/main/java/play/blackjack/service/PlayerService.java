@@ -48,7 +48,7 @@ public class PlayerService {
         if (player.getHand().get(0).getRankAsInt() != player.getHand().get(1).getRankAsInt())
             System.out.println("Cant split, you dont have a pair");
         else if (getBet(player) > getMoney(player)) {
-
+        // TODO fix?
         } else {
             player.split();
         }
