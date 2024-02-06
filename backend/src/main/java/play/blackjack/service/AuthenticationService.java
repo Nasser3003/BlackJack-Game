@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import play.blackjack.model.Player;
 import play.blackjack.repository.PlayerRepository;
 
+import java.util.Optional;
+import java.util.Scanner;
+
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @Transactional
@@ -30,4 +33,22 @@ public class AuthenticationService {
         else
             System.out.println(new DuplicateKeyException("Email already taken ERROR in PlayerService Save").getMessage());
     }
+
+    public Player login(String email, String password) {
+        if (email == null || email.isEmpty())
+            throw new IllegalArgumentException("Email cannot be null or empty.");
+
+        Optional<Player> optionalPlayer = playerRepository.findByEmail(email);
+
+        if (!optionalPlayer.isPresent())
+            throw new IllegalArgumentException("Incorrect Email.");
+        Player user = optionalPlayer.get();
+
+        if (!encoder.matches(password, user.getPassword()))
+            throw new IllegalArgumentException("Wrong Password.");
+
+        System.out.println("You have successfully logged in.");
+        return user;
+    }
+
 }

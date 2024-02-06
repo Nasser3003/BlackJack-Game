@@ -39,7 +39,7 @@ public class Player {
     @Transient
     private List<Card> splitHand = new ArrayList<>(6);
     @Transient
-    private long bet;
+    private long bet = 50;
     @Transient
     private boolean passHand;
     @Transient

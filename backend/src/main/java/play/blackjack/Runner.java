@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import play.blackjack.engine.Engine;
@@ -44,6 +43,8 @@ public class Runner implements CommandLineRunner {
 
         engine.setCasino(casino);
 
-        engine.start(playerJosh);
+        engine.start();
     }
 }
+// TODO if now i just need to print user experience
+// TODO implement user registration

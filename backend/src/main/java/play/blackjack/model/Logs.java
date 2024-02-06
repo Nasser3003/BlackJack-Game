@@ -22,14 +22,14 @@ public class Logs {
     @Column(name = "id")
     private Long id;
 
-    private long playerCapitalAdjustment;
-    private long casinoCapitalAdjustment;
+    private long playerMoneyAdjustment;
+    private long casinoRevenueAdjustment;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "player_id")
     private Player player;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "casino_id")
     private Casino casino;
 

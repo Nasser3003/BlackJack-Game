@@ -22,8 +22,8 @@ public class LogService {
         long casinoAdjustment = playerWon ? -bet : bet;
         long playerAdjustment = playerWon ? bet : -bet;
 
-        log.setCasinoCapitalAdjustment(casinoAdjustment);
-        log.setPlayerCapitalAdjustment(playerAdjustment);
+        log.setCasinoRevenueAdjustment(casinoAdjustment);
+        log.setPlayerMoneyAdjustment(playerAdjustment);
 
         logRepository.save(log);
     }
