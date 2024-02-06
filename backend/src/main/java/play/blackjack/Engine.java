@@ -39,6 +39,7 @@ public class Engine {
     public void removePlayer(Player player) {
         players.remove(player);
     }
+    
     public void start(Player theUserPlayer) {
         kickBrookePlayers();
         nonPassPlayers = new ArrayList<>(players);
@@ -107,6 +108,7 @@ public class Engine {
 
     // initialize the round by giving each player 2 cards, the first card is hidden
     private void startRound() {
+        clearScreen();
         boolean isHidden = true;
 
         for (int i = 0; i < 2; i++) {
@@ -118,6 +120,7 @@ public class Engine {
             isHidden = false;
         }
     }
+
     private void hit(Player player) {
         playerService.hit(player, deck);
         int handValue = calculateHandValue(player);
@@ -197,8 +200,21 @@ public class Engine {
 //    private void saveLog(long initialMoney) {
 //        logService.generateLog(player);
 //    }
+
+    public void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
+
 }
 // take care of logging get initial money, after losing or winning calculate.
 // fix relationship between Logs Casino and Player mainly the casino and log. and how you gonna pass the casino?
 // should I remove and make it implicit as there is only 1 casino?
+
+
+
+
+
+
 

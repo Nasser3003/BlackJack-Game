@@ -9,6 +9,7 @@ import java.util.List;
 
 @Data
 @Entity
+@Getters
 @NoArgsConstructor
 public class Player {
 
@@ -46,6 +47,13 @@ public class Player {
     private boolean passSplitHand = true;
     @Transient
     private boolean isWon;
+
+    @Builder
+    public Player(String email, String password) {
+        this.email = email;
+        this.username = email;
+        this.password = password;
+    }
 
     @Builder
     public Player(String email, long money, String password) {
