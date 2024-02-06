@@ -12,6 +12,8 @@ import play.blackjack.model.Player;
 import play.blackjack.repository.CasinoRepository;
 import play.blackjack.service.AuthenticationService;
 
+import javax.persistence.EntityManager;
+
 @NoArgsConstructor
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @Component
@@ -20,6 +22,7 @@ public class Runner implements CommandLineRunner {
     private PasswordEncoder encoder;
     private AuthenticationService authenticationService;
     private Engine engine;
+    private EntityManager entityManager;
 
     @Override
     public void run(String... args) {
@@ -43,6 +46,12 @@ public class Runner implements CommandLineRunner {
 
         engine.setCasino(casino);
 
+        System.out.println("attach status >> " + "Casino: " +
+                entityManager.contains(casino) +
+                " rod " + entityManager.contains(playerRod) +
+                " Josh " + entityManager.contains(playerJosh) +
+                " dealer " + entityManager.contains(dealer)
+        );
         engine.start();
     }
 }
