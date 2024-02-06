@@ -23,8 +23,7 @@ class PreGame {
     Player login(Scanner scanner) {
         while (true) {
             PrintDashes.printDashes();
-            System.out.print("Enter your email: ");
-            String email = scanner.nextLine();
+            String email = playerInput.validateEmail(scanner);
             System.out.print("Enter your password: ");
             String password = scanner.nextLine();
             try {

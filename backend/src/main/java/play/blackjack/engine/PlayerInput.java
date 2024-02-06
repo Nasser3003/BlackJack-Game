@@ -52,7 +52,7 @@ class PlayerInput {
         String password;
         String confirmPassword;
         do {
-            System.out.print("Enter your new account password: ");
+            System.out.print("Enter your spassword: ");
             password = scanner.nextLine();
 
             System.out.print("Enter your password again: ");
@@ -73,7 +73,7 @@ class PlayerInput {
         boolean isValid = false;
 
         do {
-            System.out.print("Enter your new account email: ");
+            System.out.print("Enter email: ");
             email = scanner.nextLine();
 
             String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
