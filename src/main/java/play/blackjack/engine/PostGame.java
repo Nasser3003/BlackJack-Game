@@ -28,27 +28,22 @@ class PostGame {
     @Transactional
     public void updatePlayersGainsAndLoses(List<Player> players) {
         for (Player p : players) {
-            if (!playerService.getPlayerByEmail(GameLogic.DEALER_EMAIL).equals(p)) {
                 playerService.adjustMoneyAndEarnings(p, p.getIsWonTieLose() * p.getBet());
                 entityManager.merge(p);
-            }
         }
     }
 
     @Transactional
     public void updateCasinoGainsAndLoses(List<Player> players) {
         for (Player p : players) {
-            if (!playerService.getPlayerByEmail(GameLogic.DEALER_EMAIL).equals(p)) {
                 casinoService.adjustRevenueAndCapital(engine.getCasino(), - p.getIsWonTieLose() * p.getBet());
                 entityManager.merge(engine.getCasino());
-            }
         }
     }
     public void generateAndSaveLogs(List<Player> players) {
-        for (Player p : players) {
-            if (!playerService.getPlayerByEmail(GameLogic.DEALER_EMAIL).equals(p))
-                logService.generateAndSaveLog(p, engine.getCasino());
-        }
+        for (Player p : players)
+            logService.generateAndSaveLog(p, engine.getCasino());
+
     }
 
     public void flushPlayersGameStats(List<Player> players) {

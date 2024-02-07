@@ -43,9 +43,9 @@ public class Engine {
     private List<Player> nonPassPlayers;
     private Casino casino;
 
-    public void start(Player theUserPlayer) {
+    public void start() {
         Scanner scanner = new Scanner(System.in);
-//        Player theUserPlayer = preGame.login(scanner);
+        Player theUserPlayer = preGame.login(scanner);
         while (playerInput.isWantToPlay(scanner)) {
             preGame.kickBrookePlayers();
             nonPassPlayers = new ArrayList<>(players);

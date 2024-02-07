@@ -1,9 +1,9 @@
 package play.blackjack.engine;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 import play.blackjack.cards.Card;
 import play.blackjack.model.Player;
@@ -12,13 +12,19 @@ import play.blackjack.utils.PrintDashes;
 
 import java.util.Scanner;
 
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @NoArgsConstructor
 @Component
 class PreGame {
+    @NonNull
     private Engine engine;
+    @NonNull
     private PlayerInput playerInput;
+    @NonNull
     private AuthenticationService authService;
+
+    @Getter
+    private final Player dealer = new Player();
 
     public Player login(Scanner scanner) {
         while (true) {
@@ -56,6 +62,7 @@ class PreGame {
         boolean isHidden = true;
 
         for (int i = 0; i < 2; i++) {
+            dealer.hit(engine.getDeck().deal()); // dealing to dealer
             for (Player p : engine.getPlayers()) {
                 Card c = engine.getDeck().deal();
                 c.setHidden(isHidden);
