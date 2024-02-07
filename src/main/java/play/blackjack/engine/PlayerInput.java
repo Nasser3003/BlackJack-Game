@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import play.blackjack.model.Player;
-import play.blackjack.service.AuthenticationService;
 import play.blackjack.service.PlayerService;
 
 import java.util.Scanner;
@@ -17,7 +16,6 @@ class PlayerInput {
     private static final int FIRST_CHOICE = 1;
     private static final int LAST_CHOICE = 11;
     private PlayerService playerService;
-    private AuthenticationService authenticationService;
 
     private static void printChoices() {
         System.out.print("\n1: Hit\n" + "2: Hit Split Hand\n" + "3: Split (you will be charged bet amount for split Hand)\n" + "4: Stay\n" + "5: Stay Split Hand\n" + "6: See Hand\n" + "7: See Split Hand\n" + "8: Calculate Hand Value\n" + "9: Calculate Hand Value Split\n" + "10: Check Your Money\n" + "11: End My Turn\n" + "Enter your choice (1-11): ");
