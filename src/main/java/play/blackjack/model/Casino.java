@@ -27,10 +27,10 @@ public class Casino {
         this.capital = capital;
     }
 
-    @OneToMany(mappedBy = "casino", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "casino")
     private List<Logs> logs;
 
-    @OneToMany(mappedBy = "casino", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "casino")
     private List<Player> players;
 
     public void adjustRevenueAndCapital(long value) {

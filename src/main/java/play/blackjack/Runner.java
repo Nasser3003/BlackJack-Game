@@ -19,7 +19,6 @@ import javax.persistence.EntityManager;
 @NoArgsConstructor
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @Component
-@Transactional
 public class Runner implements CommandLineRunner {
     private CasinoRepository casinoRepository;
     private PasswordEncoder encoder;

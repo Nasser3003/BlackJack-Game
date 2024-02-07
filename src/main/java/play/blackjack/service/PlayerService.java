@@ -54,11 +54,9 @@ public class PlayerService {
             player.split();
         }
     }
-
     public long getBet(Player player) {
         return player.getBet();
     }
-
     public void stay(Player player) {
         player.stay();
     }

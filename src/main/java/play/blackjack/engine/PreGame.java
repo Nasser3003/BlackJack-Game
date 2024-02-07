@@ -10,6 +10,7 @@ import play.blackjack.model.Player;
 import play.blackjack.service.AuthenticationService;
 import play.blackjack.utils.PrintDashes;
 
+import javax.transaction.Transactional;
 import java.util.Scanner;
 
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -20,7 +21,7 @@ class PreGame {
     private PlayerInput playerInput;
     private AuthenticationService authService;
 
-    Player login(Scanner scanner) {
+    public Player login(Scanner scanner) {
         while (true) {
             PrintDashes.printDashes();
             String email = playerInput.validateEmail(scanner);
@@ -33,7 +34,7 @@ class PreGame {
             }
         }
     }
-    void Register(Scanner scanner) {
+    public void Register(Scanner scanner) {
         while (true) {
             PrintDashes.printDashes();
             String email = playerInput.validateEmail(scanner);
@@ -47,12 +48,12 @@ class PreGame {
             }
         }
     }
-    void kickBrookePlayers() {
+    public void kickBrookePlayers() {
         engine.getPlayers().removeIf(player -> player.getMoney() < 1);
     }
 
     // initialize the round by giving each player 2 cards, the first card is hidden
-    void startRound() {
+    public void startRound() {
         boolean isHidden = true;
 
         for (int i = 0; i < 2; i++) {

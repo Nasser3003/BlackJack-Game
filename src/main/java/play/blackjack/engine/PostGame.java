@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import play.blackjack.model.Player;
 import play.blackjack.service.CasinoService;
 import play.blackjack.service.LogService;
@@ -22,7 +23,8 @@ class PostGame {
 
 
     // playerWinLoseValue * getBet if they split and win/lose with main and split hand
-    void updatePlayersGainsAndLoses(List<Player> players) {
+    @Transactional
+    public void updatePlayersGainsAndLoses(List<Player> players) {
         long value = 0;
         for (Player p : players) {
             if (p == playerService.getPlayerByEmail(GameLogic.DEALER_EMAIL))
@@ -36,7 +38,8 @@ class PostGame {
         }
     }
 
-    void updateCasinoGainsAndLoses(List<Player> players) {
+    @Transactional
+    public void updateCasinoGainsAndLoses(List<Player> players) {
         players.forEach(p -> {
             long bet = 0;
             switch (p.getIsWonTieLose()) {
@@ -46,12 +49,14 @@ class PostGame {
             casinoService.adjustRevenueAndCapital(engine.getCasino(), bet);
         });
     }
-    void generateAndSaveLogs(List<Player> players) {
+    @Transactional
+    public void generateAndSaveLogs(List<Player> players) {
         for (Player p : players) {
             logService.generateAndSaveLog(p, engine.getCasino(), playerService.getBet(p), p.getIsWonTieLose() > 0);
         }
     }
-    void flushPlayersGameStats(List<Player> players) {
+    @Transactional
+    public void flushPlayersGameStats(List<Player> players) {
         for (Player p : players) {
             playerService.flushPlayerGameStats(p);
         }

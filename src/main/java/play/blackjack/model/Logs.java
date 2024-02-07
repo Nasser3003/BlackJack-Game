@@ -25,11 +25,11 @@ public class Logs {
     private long playerMoneyAdjustment;
     private long casinoRevenueAdjustment;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "player_id")
     private Player player;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "casino_id")
     private Casino casino;
 

@@ -14,7 +14,6 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-@Transactional
 public class AuthenticationService {
 
     private final PlayerRepository playerRepository;
@@ -26,13 +25,14 @@ public class AuthenticationService {
         else
             System.out.println(new DuplicateKeyException("Email already taken ERROR in PlayerService Save").getMessage());
     }
+    @Transactional
     public void registerUser(Player player) {
         if (!playerRepository.findByEmail(player.getEmail()).isPresent())
             playerRepository.save(player);
         else
             System.out.println(new DuplicateKeyException("Email already taken ERROR in PlayerService Save").getMessage());
     }
-
+    @Transactional
     public Player login(String email, String password) {
         if (email == null || email.isEmpty())
             throw new IllegalArgumentException("Email cannot be null or empty.");
