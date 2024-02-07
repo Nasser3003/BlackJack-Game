@@ -3,6 +3,7 @@ package play.blackjack.service;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import play.blackjack.cards.Card;
 import play.blackjack.cards.Deck;
 import play.blackjack.model.Player;

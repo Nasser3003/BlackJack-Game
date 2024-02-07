@@ -27,7 +27,7 @@ public class Player {
     private long earnings;
     private String password;
 
-    @OneToMany(mappedBy = "player")
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     private List<Logs> logs = new ArrayList<>();
 
     @ManyToOne
