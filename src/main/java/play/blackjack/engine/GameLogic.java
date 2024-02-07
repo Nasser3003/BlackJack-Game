@@ -51,7 +51,7 @@ class GameLogic {
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("dealer not found"));
         for (Player p : players) {
-            if (p == dealer)
+            if (p.equals(dealer))
                 continue;
             decideHandWinOrLose(p, dealer);
             if (!p.getSplitHand().isEmpty())
@@ -64,7 +64,7 @@ class GameLogic {
     private void decideSplitHandWinOrLose(Player player, Player dealer) {
         decideAndSetWinners(player, dealer, actions::calculateSplitHandValue);
     }
-    private void decideAndSetWinners(Player player, Player dealer, Function<Player, Integer> handToCalculate) {
+    public void decideAndSetWinners(Player player, Player dealer, Function<Player, Integer> handToCalculate) {
         int dealerValue = handToCalculate.apply(dealer);
         int playerValue = handToCalculate.apply(player);
         int playerIsWonTieLoseValue = player.getIsWonTieLose();

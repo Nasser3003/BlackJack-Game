@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import play.blackjack.model.Player;
 import play.blackjack.repository.PlayerRepository;
 
@@ -25,14 +24,12 @@ public class AuthenticationService {
         else
             System.out.println(new DuplicateKeyException("Email already taken ERROR in PlayerService Save").getMessage());
     }
-    @Transactional
     public void registerUser(Player player) {
         if (!playerRepository.findByEmail(player.getEmail()).isPresent())
             playerRepository.save(player);
         else
             System.out.println(new DuplicateKeyException("Email already taken ERROR in PlayerService Save").getMessage());
     }
-    @Transactional
     public Player login(String email, String password) {
         if (email == null || email.isEmpty())
             throw new IllegalArgumentException("Email cannot be null or empty.");

@@ -7,7 +7,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 public class Player {
@@ -102,4 +103,5 @@ public class Player {
         passHand = false;
         isWonTieLose = 0;
     }
+
 }

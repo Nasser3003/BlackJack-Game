@@ -1,14 +1,12 @@
 package play.blackjack.model;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 public class Casino {
@@ -30,7 +28,7 @@ public class Casino {
     @OneToMany(mappedBy = "casino")
     private List<Logs> logs;
 
-    @OneToMany(mappedBy = "casino")
+    @OneToMany(mappedBy = "casino", fetch = FetchType.EAGER)
     private List<Player> players;
 
     public void adjustRevenueAndCapital(long value) {

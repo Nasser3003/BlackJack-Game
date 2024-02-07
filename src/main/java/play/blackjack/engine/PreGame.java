@@ -10,7 +10,6 @@ import play.blackjack.model.Player;
 import play.blackjack.service.AuthenticationService;
 import play.blackjack.utils.PrintDashes;
 
-import javax.transaction.Transactional;
 import java.util.Scanner;
 
 @AllArgsConstructor(onConstructor = @__(@Autowired))

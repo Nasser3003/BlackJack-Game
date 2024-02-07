@@ -1,16 +1,14 @@
 package play.blackjack.model;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
@@ -25,7 +23,7 @@ public class Logs {
     private long playerMoneyAdjustment;
     private long casinoRevenueAdjustment;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "player_id")
     private Player player;
 

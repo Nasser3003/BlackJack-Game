@@ -16,14 +16,11 @@ public class LogService {
         logRepository.save(log);
     }
 
-    public void generateAndSaveLog(Player player, Casino casino, long bet, boolean playerWon) {
+    public void generateAndSaveLog(Player player, Casino casino) {
         Logs log = new Logs(player, casino);
 
-        long casinoAdjustment = playerWon ? -bet : bet;
-        long playerAdjustment = playerWon ? bet : -bet;
-
-        log.setCasinoRevenueAdjustment(casinoAdjustment);
-        log.setPlayerMoneyAdjustment(playerAdjustment);
+        log.setPlayerMoneyAdjustment(player.getBet() * player.getIsWonTieLose());
+        log.setCasinoRevenueAdjustment(- player.getBet() * player.getIsWonTieLose());
 
         logRepository.save(log);
     }

@@ -57,7 +57,7 @@ public class Runner implements CommandLineRunner {
                     " Josh " + entityManager.contains(playerJosh) +
                     " dealer " + entityManager.contains(dealer)
             );
-            engine.start();
+            engine.start(playerRod);
         } else {
 
             Player playerRod = playerService.getPlayerByEmail("rod@gmail.com");
@@ -78,7 +78,7 @@ public class Runner implements CommandLineRunner {
                     " Josh " + entityManager.contains(playerJosh) +
                     " dealer " + entityManager.contains(dealer)
             );
-            engine.start();
+            engine.start(playerRod);
         }
 
     }
