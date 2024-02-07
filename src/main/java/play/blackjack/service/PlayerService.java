@@ -3,7 +3,6 @@ package play.blackjack.service;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import play.blackjack.cards.Card;
 import play.blackjack.cards.Deck;
 import play.blackjack.model.Player;
@@ -49,7 +48,7 @@ public class PlayerService {
         if (player.getHand().get(0).getRankAsInt() != player.getHand().get(1).getRankAsInt())
             System.out.println("Cant split, you dont have a pair");
         else if (getBet(player) > getMoney(player)) {
-        // TODO fix?
+            System.out.println("Cant split, you dont have the bet amount");
         } else {
             player.split();
         }
@@ -109,7 +108,7 @@ public class PlayerService {
     private boolean hasEnoughMoney(Player player, long amount) {
         return amount < player.getMoney();
     }
-    private void addMoney(Player player, long amount) {
+    void addMoney(Player player, long amount) {
         player.setMoney(amount + getMoney(player));
     }
     public void flushPlayerGameStats(Player player) {

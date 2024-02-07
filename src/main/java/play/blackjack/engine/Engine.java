@@ -56,7 +56,7 @@ public class Engine {
                 Player nonPassPlayer = iterator.next();
                 if (nonPassPlayer.isPassHand() && nonPassPlayer.isPassSplitHand())
                     iterator.remove();
-                if (nonPassPlayer == theUserPlayer) {
+                if (nonPassPlayer.equals(theUserPlayer)) {
                     gameLogic.playerMove(nonPassPlayer, scanner);
                     if (!theUserPlayer.getSplitHand().isEmpty()) {
                         System.out.println("Now for the second hand?");

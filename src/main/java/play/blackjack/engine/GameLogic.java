@@ -10,15 +10,14 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.function.Function;
 
+
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @NoArgsConstructor
 @Component
 class GameLogic {
     private PlayerInput playerInput;
     private Actions actions;
-
-    final static String DEALER_EMAIL = "dealer@house.com";
-
+    private PreGame preGame;
 
     void playerMove(Player player, Scanner scanner) {
         gameLoop: while (true) {
@@ -46,13 +45,8 @@ class GameLogic {
     }
 
     void updatePlayersAsWinLoseOrTie(List<Player> players) {
-        Player dealer = players.stream()
-                .filter(p -> p.getEmail().equals(DEALER_EMAIL))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("dealer not found"));
+        Player dealer = preGame.getDealer();
         for (Player p : players) {
-            if (p == dealer)
-                continue;
             decideHandWinOrLose(p, dealer);
             if (!p.getSplitHand().isEmpty())
                 decideSplitHandWinOrLose(p, dealer);
@@ -64,7 +58,7 @@ class GameLogic {
     private void decideSplitHandWinOrLose(Player player, Player dealer) {
         decideAndSetWinners(player, dealer, actions::calculateSplitHandValue);
     }
-    private void decideAndSetWinners(Player player, Player dealer, Function<Player, Integer> handToCalculate) {
+    public void decideAndSetWinners(Player player, Player dealer, Function<Player, Integer> handToCalculate) {
         int dealerValue = handToCalculate.apply(dealer);
         int playerValue = handToCalculate.apply(player);
         int playerIsWonTieLoseValue = player.getIsWonTieLose();

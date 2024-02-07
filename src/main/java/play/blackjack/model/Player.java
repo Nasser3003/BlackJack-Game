@@ -7,7 +7,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 public class Player {
@@ -30,7 +31,8 @@ public class Player {
     // if not eager you get this error
     /*
     Unable to evaluate the children renderer expression Method threw 'org.hibernate.LazyInitializationException' exception.
-    The error you're encountering, org.hibernate.LazyInitializationException, typically occurs when Hibernate attempts to lazily initialize a collection or entity outside of an active session.
+    The error you're encountering, org.hibernate.LazyInitializationException, typically occurs when Hibernate attempts
+    to lazily initialize a collection or entity outside an active session.
      This commonly happens when you're trying to access a lazily loaded property of an entity after the session has been closed.
      */
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
@@ -102,4 +104,5 @@ public class Player {
         passHand = false;
         isWonTieLose = 0;
     }
+
 }
