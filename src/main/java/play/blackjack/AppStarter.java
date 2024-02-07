@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import play.blackjack.engine.Engine;
 import play.blackjack.model.Casino;
-import play.blackjack.model.Player;
 import play.blackjack.service.CasinoService;
 import play.blackjack.service.PlayerService;
 
@@ -23,11 +21,9 @@ public class AppStarter {
 
     @EventListener(ApplicationReadyEvent.class)
     public void startGame() {
-        Player playerRod = playerService.getPlayerByEmail("rod@gmail.com");
 
         Casino casino = casinoService.getCasinoByName("Casino 1");
 
-        engine.addPlayer(playerRod);
 
         engine.addPlayer(playerService.getPlayerByEmail("bot1@gmail.com"));
         engine.addPlayer(playerService.getPlayerByEmail("bot2@gmail.com"));

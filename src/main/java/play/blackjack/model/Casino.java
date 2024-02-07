@@ -8,6 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@RequiredArgsConstructor
 @NoArgsConstructor
 public class Casino {
 
@@ -16,14 +17,12 @@ public class Casino {
     @Setter(AccessLevel.NONE)
     private long id;
 
+    @NonNull
     private String name;
+    @NonNull
     private long capital;
-    private long revenue;
 
-    public Casino(String name, long capital) {
-        this.name = name;
-        this.capital = capital;
-    }
+    private long revenue;
 
     @OneToMany(mappedBy = "casino")
     private List<Logs> logs;

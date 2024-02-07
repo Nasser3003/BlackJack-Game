@@ -12,9 +12,6 @@ import play.blackjack.repository.LogRepository;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class LogService {
     private LogRepository logRepository;
-    public void save(Logs log) {
-        logRepository.save(log);
-    }
 
     public void generateAndSaveLog(Player player, Casino casino) {
         Logs log = new Logs(player, casino);

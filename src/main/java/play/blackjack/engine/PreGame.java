@@ -1,9 +1,11 @@
 package play.blackjack.engine;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 import play.blackjack.cards.Card;
 import play.blackjack.model.Player;
@@ -33,7 +35,9 @@ class PreGame {
             System.out.print("Enter your password: ");
             String password = scanner.nextLine();
             try {
-                return authService.login(email, password);
+                Player p = authService.login(email, password);
+                engine.addPlayer(p);
+                return p;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
