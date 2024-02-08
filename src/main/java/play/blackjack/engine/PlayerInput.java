@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import play.blackjack.model.Player;
 import play.blackjack.service.PlayerService;
+import play.blackjack.utils.UserInterface;
 
 import java.util.Scanner;
 
@@ -18,6 +19,7 @@ class PlayerInput {
     private PlayerService playerService;
 
     private static void printChoices() {
+        UserInterface.clearScreen();
         System.out.print("\n1: Hit\n" + "2: Hit Split Hand\n" + "3: Split (you will be charged bet amount for split Hand)\n" + "4: Stay\n" + "5: Stay Split Hand\n" + "6: See Hand\n" + "7: See Split Hand\n" + "8: Calculate Hand Value\n" + "9: Calculate Hand Value Split\n" + "10: Check Your Money\n" + "11: End My Turn\n" + "Enter your choice (1-11): ");
     }
 
@@ -36,14 +38,13 @@ class PlayerInput {
         return userChoice;
     }
 
-    long enterBet(Scanner scanner, Player player) {
+    void enterBet(Scanner scanner, Player player) {
         long bet = 0;
         do {
             System.out.print("Amount to bet: ");
             if (scanner.hasNextLong()) bet = scanner.nextLong();
             scanner.nextLine();
         } while (!playerService.setBet(player, bet));
-        return bet;
     }
 
     String validatePassword(Scanner scanner) {
@@ -99,6 +100,7 @@ class PlayerInput {
     }
 
     boolean isUserWantsToLoginOrRegister(Scanner scanner) {
+        UserInterface.clearScreen();
         System.out.print("Do you want to login? (Press Enter to login, any other key to Register): ");
         return scanner.nextLine().isEmpty();
     }
