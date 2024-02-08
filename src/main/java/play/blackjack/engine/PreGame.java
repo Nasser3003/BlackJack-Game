@@ -7,11 +7,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import play.blackjack.cards.Card;
 import play.blackjack.model.Player;
 import play.blackjack.service.AuthenticationService;
 import play.blackjack.utils.PrintDashes;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -28,7 +30,15 @@ class PreGame {
     @Getter
     private final Player dealer = new Player();
 
-    public Player login(Scanner scanner) {
+    @Transactional
+    public Player authenticate(Scanner scanner) {
+        if (playerInput.isUserWantsToLoginOrRegister(scanner))
+            return login(scanner);
+        register(scanner);
+        return login(scanner);
+    }
+
+    private Player login(Scanner scanner) {
         while (true) {
             PrintDashes.printDashes();
             String email = playerInput.validateEmail(scanner);
@@ -43,7 +53,7 @@ class PreGame {
             }
         }
     }
-    public void Register(Scanner scanner) {
+    private void register(Scanner scanner) {
         while (true) {
             PrintDashes.printDashes();
             String email = playerInput.validateEmail(scanner);
@@ -66,7 +76,9 @@ class PreGame {
         boolean isHidden = true;
 
         for (int i = 0; i < 2; i++) {
-            dealer.hit(engine.getDeck().deal()); // dealing to dealer
+            Card dealerCard = engine.getDeck().deal();
+            dealerCard.setHidden(true);
+            dealer.hit(dealerCard); // dealing to dealer
             for (Player p : engine.getPlayers()) {
                 Card c = engine.getDeck().deal();
                 c.setHidden(isHidden);

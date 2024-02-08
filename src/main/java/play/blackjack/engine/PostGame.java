@@ -40,6 +40,7 @@ class PostGame {
                 entityManager.merge(engine.getCasino());
         }
     }
+    @Transactional
     public void generateAndSaveLogs(List<Player> players) {
         for (Player p : players)
             logService.generateAndSaveLog(p, engine.getCasino());

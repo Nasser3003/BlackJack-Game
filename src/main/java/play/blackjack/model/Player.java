@@ -36,6 +36,11 @@ public class Player {
      This commonly happens when you're trying to access a lazily loaded property of an entity after the session has been closed.
      */
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "player_log_junction",
+//            joinColumns = {@JoinColumn(name = "player_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "log_id")}
+//    )
     private List<Logs> logs = new ArrayList<>();
 
     @ManyToOne

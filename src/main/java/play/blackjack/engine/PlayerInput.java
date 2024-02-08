@@ -21,12 +21,12 @@ class PlayerInput {
         System.out.print("\n1: Hit\n" + "2: Hit Split Hand\n" + "3: Split (you will be charged bet amount for split Hand)\n" + "4: Stay\n" + "5: Stay Split Hand\n" + "6: See Hand\n" + "7: See Split Hand\n" + "8: Calculate Hand Value\n" + "9: Calculate Hand Value Split\n" + "10: Check Your Money\n" + "11: End My Turn\n" + "Enter your choice (1-11): ");
     }
 
-    protected boolean isWantToPlay(Scanner scanner) {
+    boolean isWantToPlay(Scanner scanner) {
         System.out.print("Do you want to play? (Press Enter to continue, any other key to exit): ");
         return scanner.nextLine().isEmpty();
     }
 
-    protected int getUserInput(Scanner scanner) {
+    int getUserInput(Scanner scanner) {
         int userChoice = 0;
         do {
             printChoices();
@@ -50,7 +50,7 @@ class PlayerInput {
         String password;
         String confirmPassword;
         do {
-            System.out.print("Enter your spassword: ");
+            System.out.print("Enter your password: ");
             password = scanner.nextLine();
 
             System.out.print("Enter your password again: ");
@@ -93,7 +93,15 @@ class PlayerInput {
             System.out.println("please enter a valid input");
             scanner.nextLine();
         }
-        return scanner.nextLong();
+        long output = scanner.nextLong();
+        scanner.nextLine();
+        return output;
     }
+
+    boolean isUserWantsToLoginOrRegister(Scanner scanner) {
+        System.out.print("Do you want to login? (Press Enter to login, any other key to Register): ");
+        return scanner.nextLine().isEmpty();
+    }
+
 
 }

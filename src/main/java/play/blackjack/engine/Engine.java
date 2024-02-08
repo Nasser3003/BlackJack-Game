@@ -45,7 +45,8 @@ public class Engine {
 
     public void start() {
         Scanner scanner = new Scanner(System.in);
-        Player theUserPlayer = preGame.login(scanner);
+        Player theUserPlayer = preGame.authenticate(scanner);
+        playerInput.enterBet(scanner, theUserPlayer);
         while (playerInput.isWantToPlay(scanner)) {
             preGame.kickBrookePlayers();
             nonPassPlayers = new ArrayList<>(players);
@@ -88,7 +89,7 @@ public class Engine {
     private void botPlayerAlgorithm(Player player) {
         int hand = actions.calculateHandValue(player);
         Random random = new Random();
-        if (hand < 18 && random.nextBoolean())
+        if (hand > 18 || hand < 18 && random.nextBoolean())
             actions.hit(player);
         else
             actions.stay(player);
