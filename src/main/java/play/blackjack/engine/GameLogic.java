@@ -19,12 +19,12 @@ class GameLogic {
     private Actions actions;
     private PreGame preGame;
 
-    void playerMove(Player player, Scanner scanner) {
+    void playerMove(Player player, Player theUserPlayer, Scanner scanner) {
         gameLoop: while (true) {
             int userChoice = playerInput.getUserInput(scanner);
             switch (userChoice) {
-                case 1: actions.hit(player); break;
-                case 2: actions.hitSplit(player); break;
+                case 1: actions.hit(player, theUserPlayer); break;
+                case 2: actions.hitSplit(player, theUserPlayer); break;
                 case 3: actions.split(player); break;
                 case 4: actions.stay(player);
                     if (actions.calculateSplitHandValue(player) == 0) // if the split hand is empty, end their round after staying

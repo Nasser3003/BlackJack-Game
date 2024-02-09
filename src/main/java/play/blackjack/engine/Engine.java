@@ -46,6 +46,7 @@ public class Engine {
     public void start() {
         Scanner scanner = new Scanner(System.in);
         Player theUserPlayer = preGame.authenticate(scanner);
+
         playerInput.enterBet(scanner, theUserPlayer);
         while (playerInput.isWantToPlay(scanner)) {
             preGame.kickBrookePlayers();
@@ -58,13 +59,13 @@ public class Engine {
                 if (nonPassPlayer.isPassHand() && nonPassPlayer.isPassSplitHand())
                     iterator.remove();
                 if (nonPassPlayer.equals(theUserPlayer)) {
-                    gameLogic.playerMove(nonPassPlayer, scanner);
+                    gameLogic.playerMove(nonPassPlayer, theUserPlayer, scanner);
                     if (!theUserPlayer.getSplitHand().isEmpty()) {
                         System.out.println("Now for the second hand?");
-                        gameLogic.playerMove(nonPassPlayer, scanner);
+                        gameLogic.playerMove(nonPassPlayer, theUserPlayer, scanner);
                     }
                 } else {
-                    botPlayerAlgorithm(nonPassPlayer);
+                    botPlayerAlgorithm(nonPassPlayer, theUserPlayer);
                 }
             }
             gameLogic.updatePlayersAsWinLoseOrTie(players);
@@ -86,11 +87,11 @@ public class Engine {
         players.remove(player);
     }
 
-    private void botPlayerAlgorithm(Player player) {
+    private void botPlayerAlgorithm(Player player, Player theUserPlayer) {
         int hand = actions.calculateHandValue(player);
         Random random = new Random();
         if (hand > 18 || hand < 18 && random.nextBoolean())
-            actions.hit(player);
+            actions.hit(player, theUserPlayer);
         else
             actions.stay(player);
     }

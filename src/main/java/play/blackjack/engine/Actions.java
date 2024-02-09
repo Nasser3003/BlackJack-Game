@@ -14,22 +14,24 @@ class Actions {
     private PlayerService playerService;
     private Engine engine;
 
-    void hit(Player player) {
+    void hit(Player player, Player theUserPlayer) {
         playerService.hit(player, engine.getDeck());
         int handValue = calculateHandValue(player);
 
         if (handValue > 21) {
             stay(player);
-            System.out.println("You have exceeded 21 with cards valued at " + handValue);
+            if (player.equals(theUserPlayer))
+                System.out.println("You have exceeded 21 with cards valued at " + handValue);
         }
     }
-    void hitSplit(Player player) {
+    void hitSplit(Player player, Player theUserPlayer) {
         playerService.hitSplit(player, engine.getDeck());
         int handValue = calculateSplitHandValue(player);
 
         if (handValue > 21) {
             stay(player);
-            System.out.println("You have exceeded 21 with cards valued at " + handValue);
+            if (player.equals(theUserPlayer))
+                System.out.println("You have exceeded 21 with cards valued at " + handValue);
         }
     }
     void split(Player player) {
