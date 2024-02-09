@@ -11,9 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import play.blackjack.cards.Card;
 import play.blackjack.model.Player;
 import play.blackjack.service.AuthenticationService;
-import play.blackjack.utils.PrintDashes;
+import play.blackjack.utils.UserInterface;
 
-import java.util.Optional;
 import java.util.Scanner;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -39,8 +38,11 @@ class PreGame {
     }
 
     private Player login(Scanner scanner) {
+        System.out.println("┌─────────────────────────────────────────┐");
+        System.out.println("│                 Login                   │");
+        System.out.println("└─────────────────────────────────────────┘");
         while (true) {
-            PrintDashes.printDashes();
+            UserInterface.printDashes();
             String email = playerInput.validateEmail(scanner);
             System.out.print("Enter your password: ");
             String password = scanner.nextLine();
@@ -54,8 +56,11 @@ class PreGame {
         }
     }
     private void register(Scanner scanner) {
+            System.out.println("┌─────────────────────────────────────────┐");
+            System.out.println("│              Registration               │");
+            System.out.println("└─────────────────────────────────────────┘");
         while (true) {
-            PrintDashes.printDashes();
+            UserInterface.printDashes();
             String email = playerInput.validateEmail(scanner);
             String password = playerInput.validatePassword(scanner);
             long money = playerInput.setInitialMoney(scanner);

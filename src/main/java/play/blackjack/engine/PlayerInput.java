@@ -36,14 +36,13 @@ class PlayerInput {
         return userChoice;
     }
 
-    long enterBet(Scanner scanner, Player player) {
+    void enterBet(Scanner scanner, Player player) {
         long bet = 0;
         do {
             System.out.print("Amount to bet: ");
             if (scanner.hasNextLong()) bet = scanner.nextLong();
             scanner.nextLine();
         } while (!playerService.setBet(player, bet));
-        return bet;
     }
 
     String validatePassword(Scanner scanner) {
