@@ -4,8 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import play.blackjack.cards.Card;
+import play.blackjack.cards.ENUMS.ECardRank;
+import play.blackjack.cards.ENUMS.ECardType;
 import play.blackjack.model.Player;
 import play.blackjack.service.PlayerService;
+import play.blackjack.utils.CardUI;
 
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @NoArgsConstructor
@@ -43,11 +49,45 @@ class Actions {
     void staySplit(Player player) {
         playerService.staySplit(player);
     }
+
     void seeHand(Player player) {
-        System.out.println(playerService.seeHand(player));
+        List<Card> hand = playerService.seeHand(player);
+        for (Card c : hand) {
+            ECardRank ecr = c.getRank();
+            ECardType ect = c.getCardType();
+            switch (ect) {
+                case CLUBS: System.out.println(CardUI.CARD_CLUBS.get(ecr)); 
+                    break;
+                case DIAMONDS: System.out.println(CardUI.CARD_DIAMONDS.get(ecr)); 
+                    break;
+                case HEARTS: System.out.println(CardUI.CARD_HEARTS.get(ecr)); 
+                    break;
+                case SPADES: System.out.println(CardUI.CARD_SPADES.get(ecr)); 
+                    break;
+                default: System.out.println("Default in Actions."); 
+                    break;
+            }
+        }
     }
+
     void seeSplitHand(Player player) {
-        System.out.println(playerService.seeSplitHand(player));
+        List<Card> hand = playerService.seeHand(player);
+        for (Card c : hand) {
+            ECardRank ecr = c.getRank();
+            ECardType ect = c.getCardType();
+            switch (ect) {
+                case CLUBS: System.out.println(CardUI.CARD_CLUBS.get(ecr)); 
+                    break;
+                case DIAMONDS: System.out.println(CardUI.CARD_DIAMONDS.get(ecr)); 
+                    break;
+                case HEARTS: System.out.println(CardUI.CARD_HEARTS.get(ecr)); 
+                    break;
+                case SPADES: System.out.println(CardUI.CARD_SPADES.get(ecr)); 
+                    break;
+                default: System.out.println("Default in Actions."); 
+                    break;
+            }
+        }
     }
     int calculateHandValue(Player player) {
         return playerService.calculateHand(player);
