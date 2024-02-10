@@ -27,9 +27,6 @@ public class Casino {
     @OneToMany(mappedBy = "casino")
     private List<Logs> logs;
 
-    @OneToMany(mappedBy = "casino", fetch = FetchType.EAGER)
-    private List<Player> players;
-
     public void adjustRevenueAndCapital(long value) {
         revenue += value;
         capital += value;

@@ -47,10 +47,10 @@ public class Engine {
         Scanner scanner = new Scanner(System.in);
         Player theUserPlayer = preGame.authenticate(scanner);
 
-        playerInput.enterBet(scanner, theUserPlayer);
         while (playerInput.isWantToPlay(scanner)) {
             preGame.kickBrookePlayers();
             nonPassPlayers = new ArrayList<>(players);
+            playerInput.enterBet(scanner, theUserPlayer);
             preGame.startRound();
 
             Iterator<Player> iterator = nonPassPlayers.iterator();

@@ -39,7 +39,7 @@ class PlayerInput {
     void enterBet(Scanner scanner, Player player) {
         long bet = 0;
         do {
-            System.out.print("Amount to bet: ");
+            System.out.print("Enter amount to bet: ");
             if (scanner.hasNextLong()) bet = scanner.nextLong();
             scanner.nextLine();
         } while (!playerService.setBet(player, bet));
@@ -68,20 +68,15 @@ class PlayerInput {
     String validateEmail(Scanner scanner) {
         String email;
         boolean isValid = false;
-
         do {
             System.out.print("Enter email: ");
             email = scanner.nextLine();
-
             String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-
             if (email.matches(emailRegex)) {
                 isValid = true;
-            } else {
+            } else
                 System.out.println("Invalid email format. Please try again.");
-            }
         } while (!isValid);
-
         return email;
     }
 
@@ -100,6 +95,21 @@ class PlayerInput {
     boolean isUserWantsToLoginOrRegister(Scanner scanner) {
         System.out.print("Do you want to login? (Press Enter to login, any other key to Register): ");
         return scanner.nextLine().isEmpty();
+    }
+    long amountToBuyCredit(Scanner scanner) {
+        long amount;
+        while (true) {
+            System.out.print("Enter Amount to buy: ");
+            if (scanner.hasNextLong()) {
+                amount = scanner.nextLong();
+                scanner.nextLine();
+                return amount;
+            }
+            else {
+                System.out.println("invalid input");
+                scanner.nextLine();
+            }
+        }
     }
 
 
