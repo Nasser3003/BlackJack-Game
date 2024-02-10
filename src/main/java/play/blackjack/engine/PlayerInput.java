@@ -94,12 +94,6 @@ class PlayerInput {
     }
 
     boolean isUserWantsToLoginOrRegister(Scanner scanner) {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
         UserInterface.clearScreen();
         System.out.print("Do you want to login? (Press Enter to login, any other key to Register): ");
         return scanner.nextLine().isEmpty();

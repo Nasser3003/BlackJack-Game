@@ -77,6 +77,7 @@ public class PlayerService {
     public boolean setBet(Player player, long amount) {
         if (hasEnoughMoney(player, amount)) {
             player.setBet(amount);
+            player.setMoney(player.getMoney() - amount);
             return true;
         } else {
             System.out.println("You don't have enough money");

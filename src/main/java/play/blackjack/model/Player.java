@@ -106,5 +106,4 @@ public class Player {
         passHand = false;
         isWonTieLose = 0;
     }
-
 }
