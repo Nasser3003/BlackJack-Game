@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import play.blackjack.cards.Card;
 import play.blackjack.cards.ENUMS.ECardRank;
@@ -51,43 +52,18 @@ class Actions {
     }
 
     void seeHand(Player player) {
-        List<Card> hand = playerService.seeHand(player);
-        for (Card c : hand) {
-            ECardRank ecr = c.getRank();
-            ECardType ect = c.getCardType();
-            switch (ect) {
-                case CLUBS: System.out.println(CardUI.CARD_CLUBS.get(ecr)); 
-                    break;
-                case DIAMONDS: System.out.println(CardUI.CARD_DIAMONDS.get(ecr)); 
-                    break;
-                case HEARTS: System.out.println(CardUI.CARD_HEARTS.get(ecr)); 
-                    break;
-                case SPADES: System.out.println(CardUI.CARD_SPADES.get(ecr)); 
-                    break;
-                default: System.out.println("Default in Actions."); 
-                    break;
-            }
-        }
+        List<Card> hand = playerService.getHand(player);
+        List<String> handInUi = new ArrayList<>();
+        hand.forEach(c -> handInUi.add(getCardUI(c)));
+        printCardsSideBySide(handInUi, hand);
     }
 
     void seeSplitHand(Player player) {
-        List<Card> hand = playerService.seeHand(player);
-        for (Card c : hand) {
-            ECardRank ecr = c.getRank();
-            ECardType ect = c.getCardType();
-            switch (ect) {
-                case CLUBS: System.out.println(CardUI.CARD_CLUBS.get(ecr)); 
-                    break;
-                case DIAMONDS: System.out.println(CardUI.CARD_DIAMONDS.get(ecr)); 
-                    break;
-                case HEARTS: System.out.println(CardUI.CARD_HEARTS.get(ecr)); 
-                    break;
-                case SPADES: System.out.println(CardUI.CARD_SPADES.get(ecr)); 
-                    break;
-                default: System.out.println("Default in Actions."); 
-                    break;
-            }
-        }
+        List<Card> splitHand = playerService.getSplitHand(player);
+        List<String> splitHandInUi = new ArrayList<>();
+        splitHand.forEach(c -> splitHandInUi.add(getCardUI(c)));
+        printCardsSideBySide(splitHandInUi, splitHand);
+
     }
     int calculateHandValue(Player player) {
         return playerService.calculateHand(player);
@@ -97,5 +73,46 @@ class Actions {
     }
     long getMoney(Player player) {
         return playerService.getMoney(player);
+    }
+    private String getCardUI (Card c) {
+        ECardRank ecr = c.getRank();
+        ECardType ect = c.getCardType();
+        String cardUi = null;
+        switch (ect) {
+            case CLUBS:
+                cardUi = CardUI.CARD_CLUBS.get(ecr);
+                break;
+            case DIAMONDS:
+                cardUi = CardUI.CARD_DIAMONDS.get(ecr);
+                break;
+            case HEARTS:
+                cardUi = CardUI.CARD_HEARTS.get(ecr);
+                break;
+            case SPADES:
+                cardUi = CardUI.CARD_SPADES.get(ecr);
+        }
+        return cardUi;
+    }
+    private void printCardsSideBySide(List<String> handInUi, List<Card> cards) {
+        String[][] allCardsLinesSplit = new String[handInUi.size()][];
+
+        StringBuilder hiddenStatus = new StringBuilder();
+        cards.forEach( c -> hiddenStatus.append(" ").append(c.isHidden()).append("\t"));
+
+        // split each card into lines
+        for (int i = 0; i < handInUi.size(); i++) {
+            allCardsLinesSplit[i] = handInUi.get(i).split("\r\n");
+        }
+
+        // print cards side by side
+        for (int i = 0; i < allCardsLinesSplit[0].length; i++) {
+            StringBuilder sb = new StringBuilder();
+            for (String[] cardLines : allCardsLinesSplit) {
+                sb.append(cardLines[i]).append("\t");
+            }
+            System.out.println(sb);
+        }
+        // print each card is hidden or not
+        System.out.println(hiddenStatus);
     }
 }

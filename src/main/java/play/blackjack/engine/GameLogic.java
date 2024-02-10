@@ -38,7 +38,7 @@ class GameLogic {
                     int handValue = actions.calculateSplitHandValue(player);
                     System.out.println(handValue > 0 ? "\nYour Split Hand Value: " + handValue : "\nYou don't have a Split Hand");
                     break;
-                case 10: System.out.println(actions.getMoney(player)); break;
+                case 10: System.out.printf("Wallet: $%d \n", actions.getMoney(player)); break;
                 case 11: break gameLoop;
             }
         }

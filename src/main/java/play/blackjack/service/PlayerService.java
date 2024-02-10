@@ -62,10 +62,10 @@ public class PlayerService {
     public void staySplit(Player player) {
         player.staySplit();
     }
-    public List<Card> seeHand(Player player) {
+    public List<Card> getHand(Player player) {
         return player.getHand();
     }
-    public List<Card> seeSplitHand(Player player) {
+    public List<Card> getSplitHand(Player player) {
         return player.getSplitHand();
     }
     public long getMoney(Player player) {

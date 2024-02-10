@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    active: development # this is profile for logback
+    active: development # this is profiled for logback
 
   main:
     web-application-type: servlet
@@ -15,7 +15,7 @@ spring:
 
   jpa:
     hibernate:
-          ddl-auto: create-drop
+          ddl-auto: update
     show-sql: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
