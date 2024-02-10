@@ -18,23 +18,24 @@ public class AuthenticationService {
     private final PlayerRepository playerRepository;
     private final PasswordEncoder encoder;
 
-    public void registerUser(String email, String password, long money) {
-        if (!playerRepository.findByEmail(email).isPresent())
-            playerRepository.save(new Player(email, money, encoder.encode(password)));
+    public void register(String email, String password, long money) {
+        if (!playerRepository.findByEmailIgnoreCase(email).isPresent())
+            playerRepository.save(new Player(email, encoder.encode(password), money));
         else
-            System.out.println(new DuplicateKeyException("Email already taken ERROR in PlayerService Save").getMessage());
+            throw new DuplicateKeyException("Email already taken ERROR in PlayerService Save");
     }
-    public void registerUser(Player player) {
-        if (!playerRepository.findByEmail(player.getEmail()).isPresent())
-            playerRepository.save(player);
+    public void register(String email, String password) {
+        if (!playerRepository.findByEmailIgnoreCase(email).isPresent())
+            playerRepository.save(Player.builder().email(email).password(encoder.encode(password)).build());
         else
-            System.out.println(new DuplicateKeyException("Email already taken ERROR in PlayerService Save").getMessage());
+            throw new DuplicateKeyException("Email already taken ERROR in PlayerService Save");
     }
+
     public Player login(String email, String password) {
         if (email == null || email.isEmpty())
             throw new IllegalArgumentException("Email cannot be null or empty.");
 
-        Optional<Player> optionalPlayer = playerRepository.findByEmail(email);
+        Optional<Player> optionalPlayer = playerRepository.findByEmailIgnoreCase(email);
 
         if (!optionalPlayer.isPresent())
             throw new IllegalArgumentException("Incorrect Email.");

@@ -21,14 +21,12 @@ public class Player {
 
     @Column(unique = true)
     private String email;
-    @Column(unique = true)
-    private String username;
 
     private long money;
     private long earnings;
     private String password;
 
-    // if not eager you get this error
+    // If not eager, you get this error
     /*
     Unable to evaluate the children renderer expression Method threw 'org.hibernate.LazyInitializationException' exception.
     The error you're encountering, org.hibernate.LazyInitializationException, typically occurs when Hibernate attempts
@@ -43,10 +41,6 @@ public class Player {
 //    )
     private List<Logs> logs = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "casino_id")
-    private Casino casino;
-
     @Transient
     private List<Card> hand = new ArrayList<>(6);
     @Transient
@@ -58,14 +52,17 @@ public class Player {
     @Transient
     private boolean passSplitHand = true;
     @Transient
-    private int isWonTieLose; // 1 for win -1 for lose 0 for tie
+    private int isWonTieLose; // 1 for win -1 for losing 0 for tie
 
     @Builder
-    public Player(String email, long money, String password) {
+    public Player(String email, String password) {
         this.email = email;
-        this.username = email;
-        this.money = money;
         this.password = password;
+    }
+    public Player(String email, String password, long money) {
+        this.email = email;
+        this.password = password;
+        this.money = money;
     }
     public void hit(Card card) {
         if (playedSplitSoNextCardInHandIsHidden())

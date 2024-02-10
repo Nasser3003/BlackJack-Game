@@ -19,7 +19,7 @@ public class PlayerService {
     private PlayerRepository playerRepository;
 
     public Player getPlayerByEmail(String email) {
-        Optional<Player> playerOptional = playerRepository.findByEmail(email);
+        Optional<Player> playerOptional = playerRepository.findByEmailIgnoreCase(email);
         if (playerOptional.isPresent())
             return playerOptional.get();
         throw new NoSuchElementException("Player not found with email: " + email);
