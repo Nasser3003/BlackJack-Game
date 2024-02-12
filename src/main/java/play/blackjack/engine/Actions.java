@@ -91,6 +91,7 @@ class Actions {
             case SPADES:
                 cardUi = CardUI.CARD_SPADES.get(ecr);
         }
+
         return cardUi;
     }
     private void printCardsSideBySide(List<String> handInUi, List<Card> cards) {

@@ -72,7 +72,8 @@ public class PlayerService {
         return player.getMoney();
     }
     public void adjustMoneyAndEarnings(Player player, long value) {
-        player.adjustMoneyAndEarnings(value);
+        if (player.getIsWonTieLose() > 0)
+            player.adjustMoneyAndEarnings(value);
     }
     public boolean setBet(Player player, long amount) {
         if (hasEnoughMoney(player, amount)) {
@@ -100,10 +101,12 @@ public class PlayerService {
         if (aces.isEmpty()) return sum;
 
         // if there is ace do the logic
-        if ((sum + 11) > 21)
-            for (Card ace : aces)
+        for (Card ace : aces) {
+            if ((sum + 11) <= 21)
+                sum += ace.getRankAsInt() + 10;
+            else
                 sum += ace.getRankAsInt();
-
+        }
         return sum;
     }
     private boolean hasEnoughMoney(Player player, long amount) {
