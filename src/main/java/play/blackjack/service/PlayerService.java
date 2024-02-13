@@ -72,8 +72,10 @@ public class PlayerService {
         return player.getMoney();
     }
     public void adjustMoneyAndEarnings(Player player, long value) {
-        if (player.getIsWonTieLose() > 0)
-            player.adjustMoneyAndEarnings(value);
+        if (player.getIsWonTieLose() > 0)  // when initially setting the bet,the money gets reduced the amount
+            player.adjustMoneyAndEarnings(value * 2);
+        else
+            player.setEarnings(player.getEarnings() - value);
     }
     public boolean setBet(Player player, long amount) {
         if (hasEnoughMoney(player, amount)) {

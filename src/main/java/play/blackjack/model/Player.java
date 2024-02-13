@@ -39,14 +39,14 @@ public class Player {
 //            joinColumns = {@JoinColumn(name = "player_id")},
 //            inverseJoinColumns = {@JoinColumn(name = "log_id")}
 //    )
-    private List<Logs> logs = new ArrayList<>();
+    private List<Log> logs = new ArrayList<>();
 
     @Transient
     private List<Card> hand = new ArrayList<>(6);
     @Transient
     private List<Card> splitHand = new ArrayList<>(6);
     @Transient
-    private long bet = 50;
+    private long bet;
     @Transient
     private boolean passHand;
     @Transient

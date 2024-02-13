@@ -25,7 +25,7 @@ public class Casino {
     private long revenue;
 
     @OneToMany(mappedBy = "casino")
-    private List<Logs> logs;
+    private List<Log> logs;
 
     public void adjustRevenueAndCapital(long value) {
         revenue += value;

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
-public class Logs {
+public class Log {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,7 +31,7 @@ public class Logs {
     @JoinColumn(name = "casino_id")
     private Casino casino;
 
-    public Logs(Player player, Casino casino) {
+    public Log(Player player, Casino casino) {
         this.player = player;
         this.casino = casino;
     }

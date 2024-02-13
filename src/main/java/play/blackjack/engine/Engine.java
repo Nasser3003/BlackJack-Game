@@ -88,8 +88,15 @@ public class Engine {
     }
 
     private void botPlayerAlgorithm(Player player, Player theUserPlayer) {
-        int hand = actions.calculateHandValue(player);
+        int bet;
         Random random = new Random();
+        do {
+            bet = 25 * (random.nextInt(5) + 1);
+        } while (playerService.getMoney(player) <= bet);
+
+        playerService.setBet(player, bet);
+
+        int hand = actions.calculateHandValue(player);
         if (hand > 18 || hand < 18 && random.nextBoolean())
             actions.hit(player, theUserPlayer);
         else
