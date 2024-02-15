@@ -1,4 +1,4 @@
-# Team Bill Blackjack
+# Blackjack Game
 
 Welcome to the Team Bill Blackjack game! 
 
@@ -7,9 +7,9 @@ Welcome to the Team Bill Blackjack game!
 
 ## Basics
 
-Blakjack, also known as twenty-one, is a popular card game playe in casinos worldwide. The objective of the game is to beat the dealer by having a hand value closer to 21 without exceeding it. 
+Blakjack, also known as twenty-one, is a popular card game played in casinos worldwide. The objective of the game is to beat the dealer by having a hand value closer to 21 without exceeding it. 
 
-Here are the basic rules of Blackjack:
+**Here are the basic rules of Blackjack:**
 
 1. **Card Values:** Numbered cards (2 through 10) are worth their face value. Face cards (Jack, Queen, King) are each worth 10 points. Aces can be worth either 1 point or 11 points, depending on which value benefits the player. 
 
@@ -26,6 +26,7 @@ Here are the basic rules of Blackjack:
 
 Blackjack is a game of both skill and chance, with strategies involving decisions based on the player's hand value, the dealer's visible card, and probability.
 
+
 ## How To Play
 
 **Objective:**
@@ -35,7 +36,7 @@ Beat The Dealer
 **Registering or Logging In:**\
 You will need to register an account or log in to access the game. Follow the instructions provided by the platform to create an account or sign in.
 
-**Basic Gameplay Actions:**\
+## **Basic Gameplay Actions:**
 **Hit:** To request an additional card to improve your hand total.
 
 **Split:** If you're dealt a pair, you have the option to split your hand into two separate hands, each with one of the pair cards. The amount of the original bet then goes on one of the cards, and an equal amount must be placed as a bet on the other card. 
@@ -48,7 +49,7 @@ You will need to register an account or log in to access the game. Follow the in
 
 **See Dealer's Hand:**  View the cards dealt to the dealer. Note that one of their cards (The Hole Card) will not be visible to you.
 
-**Advanced Gameplay Actions:**\
+## **Advanced Gameplay Actions:**
 **Hit Split Hand:** If you've chosen to split your hand and receive an additional card for one of the split hands.
 
 **Stay Split Hand:** To decline receiving any more cards for one of your split hands and keep its current total.
