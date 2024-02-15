@@ -30,22 +30,26 @@ class GameLogic {
                     if (actions.calculateSplitHandValue(player) == 0) // if the split hand is empty, end their round after staying
                         break gameLoop;
                     break;
-                case 5: actions.staySplit(player); break;
+                case 5: actions.staySplit(player);
+                    if (player.isPassHand())
+                        break gameLoop;
+                    break;
                 case 6: actions.seeHand(player); break;
                 case 7: actions.seeSplitHand(player); break;
-                case 8: System.out.println("\nYour Hand Value: " + actions.calculateHandValue(player)); break;
-                case 9:
+                case 8: actions.seeDealersHand(preGame.getDealer()); break;
+                case 9: System.out.println("\nYour Hand Value: " + actions.calculateHandValue(player)); break;
+                case 10:
                     int handValue = actions.calculateSplitHandValue(player);
                     System.out.println(handValue > 0 ? "\nYour Split Hand Value: " + handValue : "\nYou don't have a Split Hand");
                     break;
-                case 10: System.out.printf("Wallet: $%d \n", actions.getMoney(player)); break;
-                case 11: break gameLoop;
+                case 11: System.out.printf("Wallet: $%d \n", actions.getMoney(player)); break;
             }
         }
     }
 
     void updatePlayersAsWinLoseOrTie(List<Player> players) {
         Player dealer = preGame.getDealer();
+
         for (Player p : players) {
             decideHandWinOrLose(p, dealer);
             if (!p.getSplitHand().isEmpty())

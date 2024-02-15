@@ -10,6 +10,7 @@ import play.blackjack.model.Player;
 import play.blackjack.service.CasinoService;
 import play.blackjack.service.LogService;
 import play.blackjack.service.PlayerService;
+import play.blackjack.utils.UserInterface;
 
 import java.util.*;
 
@@ -68,10 +69,23 @@ public class Engine {
                     botPlayerAlgorithm(nonPassPlayer, theUserPlayer);
                 }
             }
+            dealerAlgorithm(preGame.getDealer(), theUserPlayer);
+
             gameLogic.updatePlayersAsWinLoseOrTie(players);
             postGame.updatePlayersGainsAndLoses(players);
             postGame.updateCasinoGainsAndLoses(players);
             postGame.generateAndSaveLogs(players);
+
+            if (theUserPlayer.getIsWonTieLose() > 0) System.out.println("You Win!");
+            else if (theUserPlayer.getIsWonTieLose() < 0) System.out.println("You lose!");
+            else System.out.println("Tie");
+
+            System.out.println("Your Cards are: ");
+            actions.seeHand(theUserPlayer);
+            UserInterface.printDashes(15);
+            System.out.println("Dealer Cards are: ");
+            actions.seeHand(preGame.getDealer());
+
             postGame.flushPlayersGameStats(players);
         }
 
@@ -97,11 +111,25 @@ public class Engine {
         playerService.setBet(player, bet);
 
         int hand = actions.calculateHandValue(player);
-        if (hand > 18 || hand < 18 && random.nextBoolean())
+        if (hand < 17 || hand > 17 && random.nextBoolean())
             actions.hit(player, theUserPlayer);
         else
             actions.stay(player);
     }
+    private void dealerAlgorithm(Player dealer, Player theUserPlayer) {
+        UserInterface.clearScreen();
+
+        while (actions.calculateHandValue(dealer) < 17) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            actions.hit(dealer, theUserPlayer);
+            System.out.println("Dealer Draw a card, His new cards are...");
+            actions.seeDealersHand(dealer);
+            UserInterface.printDashes();
+        }
+    }
 }
-// TODO take care of logging get initial money
 

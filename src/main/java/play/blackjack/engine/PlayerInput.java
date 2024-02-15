@@ -19,7 +19,20 @@ class PlayerInput {
     private PlayerService playerService;
 
     private static void printChoices() {
-        System.out.print("\n1: Hit\n" + "2: Hit Split Hand\n" + "3: Split (you will be charged bet amount for split Hand)\n" + "4: Stay\n" + "5: Stay Split Hand\n" + "6: See Hand\n" + "7: See Split Hand\n" + "8: Calculate Hand Value\n" + "9: Calculate Hand Value Split\n" + "10: Check Your Money\n" + "11: End My Turn\n" + "Enter your choice (1-11): ");
+        System.out.print(
+                "\n" +
+                "1: Hit\n" +
+                "2: Hit Split Hand\n" +
+                "3: Split (you will be charged bet amount for split Hand)\n" + "4: Stay\n" +
+                "5: Stay Split Hand\n" +
+                "6: See Hand\n" +
+                "7: See Split Hand\n" +
+                "8: See Dealer's Hand\n" +
+                "9: Calculate Hand Value\n" +
+                "10: Calculate Hand Value Split\n" +
+                "11: Check Your Money\n"+
+                "Enter your choice (1-11): "
+        );
     }
 
     boolean isWantToPlay(Scanner scanner) {
@@ -81,17 +94,7 @@ class PlayerInput {
         return email;
     }
 
-    long setInitialMoney(Scanner scanner) {
-        System.out.print("Enter the amount of money: ");
 
-        while (!scanner.hasNextLong()) {
-            System.out.println("please enter a valid input");
-            scanner.nextLine();
-        }
-        long output = scanner.nextLong();
-        scanner.nextLine();
-        return output;
-    }
 
     boolean isUserWantsToLoginOrRegister(Scanner scanner) {
         UserInterface.clearScreen();

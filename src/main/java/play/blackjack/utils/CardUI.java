@@ -5,6 +5,15 @@ import play.blackjack.cards.ENUMS.ECardRank;
 import java.util.HashMap;
 
 public class CardUI {
+
+    public static final String hiddenCard =
+                    " _____\r\n" +
+                    "|%=%=%|\r\n" +
+                    "|=%=%=|\r\n" +
+                    "|%=%=%|\r\n" +
+                    "|=%=%=|\r\n" +
+                    "|_____|\r\n"
+    ;
     public static final HashMap<ECardRank, String> CARD_CLUBS = new HashMap<>();
     public static final HashMap<ECardRank, String> CARD_DIAMONDS = new HashMap<>();
     public static final HashMap<ECardRank, String> CARD_HEARTS = new HashMap<>();

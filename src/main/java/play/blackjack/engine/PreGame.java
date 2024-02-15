@@ -39,19 +39,16 @@ class PreGame {
 
     // initialize the round by giving each player 2 cards, the first card is hidden
     void startRound() {
-        boolean isHidden = true;
+        boolean isHidden = false;
 
         for (int i = 0; i < 2; i++) {
             Card dealerCard = engine.getDeck().deal();
-            dealerCard.setHidden(true);
+            dealerCard.setHidden(isHidden);
             dealer.hit(dealerCard); // dealing to dealer
             for (Player p : engine.getPlayers()) {
-                Card c = engine.getDeck().deal();
-                c.setHidden(isHidden);
-                p.hit(c);
+                p.hit(engine.getDeck().deal());
             }
-            isHidden = false;
+            isHidden = true;
         }
     }
-
 }

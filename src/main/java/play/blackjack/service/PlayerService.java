@@ -33,7 +33,6 @@ public class PlayerService {
     public void hit(Player player, Deck deck) {
         if (!player.isPassHand()) {
             player.hit(deck.deal());
-
         }
         else
             System.out.println("You can't request card for your Hand");
@@ -75,7 +74,7 @@ public class PlayerService {
         if (player.getIsWonTieLose() > 0)  // when initially setting the bet,the money gets reduced the amount
             player.adjustMoneyAndEarnings(value * 2);
         else
-            player.setEarnings(player.getEarnings() - value);
+            player.setEarnings(player.getEarnings() + value); // + because value is negative if they lose
     }
     public boolean setBet(Player player, long amount) {
         if (hasEnoughMoney(player, amount)) {
@@ -112,7 +111,7 @@ public class PlayerService {
         return sum;
     }
     private boolean hasEnoughMoney(Player player, long amount) {
-        return amount < player.getMoney();
+        return amount <= player.getMoney();
     }
     void addMoney(Player player, long amount) {
         player.setMoney(amount + getMoney(player));
@@ -121,4 +120,3 @@ public class PlayerService {
         player.flushPlayerGameStats();
     }
 }
-// TODO fix error handling in Save

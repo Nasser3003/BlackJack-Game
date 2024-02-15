@@ -57,6 +57,12 @@ class Actions {
         hand.forEach(c -> handInUi.add(getCardUI(c)));
         printCardsSideBySide(handInUi, hand);
     }
+    void seeDealersHand(Player player) {
+        List<Card> hand = playerService.getHand(player);
+        List<String> handInUi = new ArrayList<>();
+        hand.forEach(c -> handInUi.add(getCardUIHideHidden(c)));
+        printCardsSideBySide(handInUi, hand);
+    }
 
     void seeSplitHand(Player player) {
         List<Card> splitHand = playerService.getSplitHand(player);
@@ -94,11 +100,30 @@ class Actions {
 
         return cardUi;
     }
+    private String getCardUIHideHidden (Card c) {
+        ECardRank ecr = c.getRank();
+        ECardType ect = c.getCardType();
+        String cardUi = null;
+        if (c.isHidden())
+            cardUi = CardUI.hiddenCard;
+        else
+            switch (ect) {
+                case CLUBS:
+                    cardUi = CardUI.CARD_CLUBS.get(ecr);
+                    break;
+                case DIAMONDS:
+                    cardUi = CardUI.CARD_DIAMONDS.get(ecr);
+                    break;
+                case HEARTS:
+                    cardUi = CardUI.CARD_HEARTS.get(ecr);
+                    break;
+                case SPADES:
+                    cardUi = CardUI.CARD_SPADES.get(ecr);
+            }
+        return cardUi;
+    }
     private void printCardsSideBySide(List<String> handInUi, List<Card> cards) {
         String[][] allCardsLinesSplit = new String[handInUi.size()][];
-
-        StringBuilder hiddenStatus = new StringBuilder();
-        cards.forEach( c -> hiddenStatus.append(" ").append(c.isHidden()).append("\t"));
 
         // split each card into lines
         for (int i = 0; i < handInUi.size(); i++) {
@@ -113,7 +138,5 @@ class Actions {
             }
             System.out.println(sb);
         }
-        // print each card is hidden or not
-        System.out.println(hiddenStatus);
     }
 }
