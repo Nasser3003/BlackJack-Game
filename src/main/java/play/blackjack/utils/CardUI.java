@@ -22,7 +22,6 @@ public class CardUI {
 
         // CLUBS
 
-
         CARD_CLUBS.put(ECardRank.ACE,
                         " _____\r\n" +
                         "|A _  |\r\n" +
@@ -32,7 +31,7 @@ public class CardUI {
                         "|____V|\r\n"
         );
         CARD_CLUBS.put(ECardRank.TWO,
-                " _____\r\n" +
+                        " _____\r\n" +
                         "|2 _  |\r\n" +
                         "| ( ) |\r\n" +
                         "|(_'_)|\r\n" +
@@ -40,7 +39,7 @@ public class CardUI {
                         "|____2|\r\n"
         );
         CARD_CLUBS.put(ECardRank.THREE,
-                " _____\r\n" +
+                        " _____\r\n" +
                         "|3 _  |\r\n" +
                         "| ( ) |\r\n" +
                         "|(_'_)|\r\n" +
@@ -64,7 +63,7 @@ public class CardUI {
                         "|____5|\r\n"
         );
         CARD_CLUBS.put(ECardRank.SIX,
-                " _____\r\n" +
+                        " _____\r\n" +
                         "|6 _  |\r\n" +
                         "| ( ) |\r\n" +
                         "|(_'_)|\r\n" +
@@ -72,7 +71,7 @@ public class CardUI {
                         "|____6|\r\n"
         );
         CARD_CLUBS.put(ECardRank.SEVEN,
-                " _____\r\n" +
+                        " _____\r\n" +
                         "|7 _  |\r\n" +
                         "| ( ) |\r\n" +
                         "|(_'_)|\r\n" +
@@ -80,7 +79,7 @@ public class CardUI {
                         "|____7|\r\n"
         );
         CARD_CLUBS.put(ECardRank.EIGHT,
-                " _____\r\n" +
+                        " _____\r\n" +
                         "|8 _  |\r\n" +
                         "| ( ) |\r\n" +
                         "|(_'_)|\r\n" +
@@ -88,7 +87,7 @@ public class CardUI {
                         "|____8|\r\n"
         );
         CARD_CLUBS.put(ECardRank.NINE,
-                " _____\r\n" +
+                        " _____\r\n" +
                         "|9 _  |\r\n" +
                         "| ( ) |\r\n" +
                         "|(_'_)|\r\n" +
@@ -96,7 +95,7 @@ public class CardUI {
                         "|____9|\r\n"
         );
         CARD_CLUBS.put(ECardRank.TEN,
-                " _____\r\n" +
+                        " _____\r\n" +
                         "|10 _ |\r\n" +
                         "| ( ) |\r\n" +
                         "|(_'_)|\r\n" +

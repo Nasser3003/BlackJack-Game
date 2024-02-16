@@ -55,14 +55,18 @@ as strategic decisions pivot on both your hand and the dealer's visible card.
 - Dealer's hand out-values yours after the final draw.
 
 ## Screenshots
-![Blackjack Game Screenshot Login](screenshots/Login.png "Blackjack Game Screenshot")
+![Blackjack Game Screenshot Login](screenshots/Login.png "Blackjack Game Login")
 
-![Blackjack Game Screenshot See-Hand](screenshots/SeeHand.png "Blackjack Game Screenshot")
+![Blackjack Game Screenshot See-Hand](screenshots/SeeHand.png "Blackjack Game See Hand")
 
-![Blackjack Game Screenshot Hit And See-Hand](screenshots/HitAndSeeHand.png "Blackjack Game Screenshot")
+![Blackjack Game Screenshot See-Hand](screenshots/PairCanSplit.png "Blackjack Game Split")
 
-![Blackjack Game Screenshot See Dealer's Hand](screenshots/SeeDealerHand.png "Blackjack Game Screenshot")
+![Blackjack Game Screenshot See-Hand](screenshots/SplitHandComplete.png "Blackjack Game After Splitting")
 
-![Blackjack Game Screenshot End Turn](screenshots/EndTurn.png "Blackjack Game Screenshot")
+![Blackjack Game Screenshot Hit And See-Hand](screenshots/HitAndSeeHand.png "Blackjack Game Hit And See Hand")
+
+![Blackjack Game Screenshot See Dealer's Hand](screenshots/SeeDealerHand.png "Blackjack Game See Dealer Hand")
+
+![Blackjack Game Screenshot End Turn](screenshots/EndTurn.png "Blackjack Game End Turn")
 
 ![Blackjack Game Screenshot Results](screenshots/Results.png "Blackjack Game Results")

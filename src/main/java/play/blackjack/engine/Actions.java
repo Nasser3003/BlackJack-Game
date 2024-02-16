@@ -101,26 +101,9 @@ class Actions {
         return cardUi;
     }
     private String getCardUIHideHidden (Card c) {
-        ECardRank ecr = c.getRank();
-        ECardType ect = c.getCardType();
-        String cardUi = null;
         if (c.isHidden())
-            cardUi = CardUI.hiddenCard;
-        else
-            switch (ect) {
-                case CLUBS:
-                    cardUi = CardUI.CARD_CLUBS.get(ecr);
-                    break;
-                case DIAMONDS:
-                    cardUi = CardUI.CARD_DIAMONDS.get(ecr);
-                    break;
-                case HEARTS:
-                    cardUi = CardUI.CARD_HEARTS.get(ecr);
-                    break;
-                case SPADES:
-                    cardUi = CardUI.CARD_SPADES.get(ecr);
-            }
-        return cardUi;
+            return CardUI.hiddenCard;
+        return getCardUI(c);
     }
     private void printCardsSideBySide(List<String> handInUi) {
         String[][] allCardsLinesSplit = new String[handInUi.size()][];

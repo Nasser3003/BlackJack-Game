@@ -62,7 +62,7 @@ class GameLogic {
     private void decideSplitHandWinOrLose(Player player, Player dealer) {
         decideAndSetWinners(player, dealer, actions::calculateSplitHandValue);
     }
-    public void decideAndSetWinners(Player player, Player dealer, Function<Player, Integer> handToCalculate) {
+    private void decideAndSetWinners(Player player, Player dealer, Function<Player, Integer> handToCalculate) {
         int dealerValue = handToCalculate.apply(dealer);
         int playerValue = handToCalculate.apply(player);
         int playerIsWonTieLoseValue = player.getIsWonTieLose();

@@ -18,7 +18,7 @@ class PlayerInput {
     private static final int LAST_CHOICE = 11;
     private PlayerService playerService;
 
-    private static void printChoices() {
+    static void printChoices() {
         System.out.print(
                 "\n" +
                 "1: Hit\n" +

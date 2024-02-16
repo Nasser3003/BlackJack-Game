@@ -26,7 +26,7 @@ class PreGame {
     @Getter
     private final Player dealer = new Player();
 
-    public Player authenticate(Scanner scanner) {
+    Player authenticate(Scanner scanner) {
         if (playerInput.isUserWantsToLoginOrRegister(scanner))
             return authPlayer.loginUser(scanner);
         authPlayer.registerUser(scanner);

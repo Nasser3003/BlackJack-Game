@@ -91,6 +91,7 @@ public class Engine {
             actions.seeHand(preGame.getDealer());
 
             postGame.flushPlayersGameStats(players);
+            playerService.flushPlayerGameStats(preGame.getDealer());
         }
 
         scanner.close();
@@ -124,11 +125,6 @@ public class Engine {
         UserInterface.clearScreen();
 
         while (actions.calculateHandValue(dealer) < 17) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
             actions.hit(dealer, theUserPlayer);
             System.out.println("Dealer Draw a card, His new cards are...");
             actions.seeDealerHand(dealer);

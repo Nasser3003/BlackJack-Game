@@ -23,8 +23,6 @@ class PostGame {
     private Engine engine;
     private EntityManager entityManager;
 
-
-    // playerWinLoseValue * getBet if they split and win/lose with main and split hand
     @Transactional
     public void updatePlayersGainsAndLoses(List<Player> players) {
         for (Player p : players) {
@@ -47,7 +45,7 @@ class PostGame {
 
     }
 
-    public void flushPlayersGameStats(List<Player> players) {
+    void flushPlayersGameStats(List<Player> players) {
         for (Player p : players) {
             playerService.flushPlayerGameStats(p);
         }
