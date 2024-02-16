@@ -70,8 +70,7 @@ public class PlayerService {
     public long getMoney(Player player) {
         return player.getMoney();
     }
-    public void adjustMoneyAndEarnings(Player player, long bet) {
-        int playerWisLoses = player.getIsWonTieLose();
+    public void adjustMoneyAndEarnings(Player player, int playerWisLoses, long bet) {
 
         if (playerWisLoses > 0)
             player.adjustMoneyAndEarnings(bet * (playerWisLoses * 2L));

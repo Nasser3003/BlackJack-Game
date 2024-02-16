@@ -26,7 +26,7 @@ class PostGame {
     @Transactional
     public void updatePlayersGainsAndLoses(List<Player> players) {
         for (Player p : players) {
-                playerService.adjustMoneyAndEarnings(p, p.getIsWonTieLose() * p.getBet());
+                playerService.adjustMoneyAndEarnings(p, p.getIsWonTieLose(),  p.getBet());
                 entityManager.merge(p);
         }
     }

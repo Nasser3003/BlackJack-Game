@@ -83,7 +83,7 @@ public class Player {
     }
     public void adjustMoneyAndEarnings(long value) {
         money += value;
-        earnings += value;
+        earnings += value / 2;
     }
     private void hit(List<Card> hand, Card card) {
         hand.add(card);
