@@ -36,7 +36,7 @@ class GameLogic {
                     break;
                 case 6: actions.seeHand(player); break;
                 case 7: actions.seeSplitHand(player); break;
-                case 8: actions.seeDealersHand(preGame.getDealer()); break;
+                case 8: actions.seeDealerHand(preGame.getDealer()); break;
                 case 9: System.out.println("\nYour Hand Value: " + actions.calculateHandValue(player)); break;
                 case 10:
                     int handValue = actions.calculateSplitHandValue(player);

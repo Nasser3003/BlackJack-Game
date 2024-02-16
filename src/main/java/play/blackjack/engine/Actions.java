@@ -55,20 +55,20 @@ class Actions {
         List<Card> hand = playerService.getHand(player);
         List<String> handInUi = new ArrayList<>();
         hand.forEach(c -> handInUi.add(getCardUI(c)));
-        printCardsSideBySide(handInUi, hand);
+        printCardsSideBySide(handInUi);
     }
-    void seeDealersHand(Player player) {
+    void seeDealerHand(Player player) {
         List<Card> hand = playerService.getHand(player);
         List<String> handInUi = new ArrayList<>();
         hand.forEach(c -> handInUi.add(getCardUIHideHidden(c)));
-        printCardsSideBySide(handInUi, hand);
+        printCardsSideBySide(handInUi);
     }
 
     void seeSplitHand(Player player) {
         List<Card> splitHand = playerService.getSplitHand(player);
         List<String> splitHandInUi = new ArrayList<>();
         splitHand.forEach(c -> splitHandInUi.add(getCardUI(c)));
-        printCardsSideBySide(splitHandInUi, splitHand);
+        printCardsSideBySide(splitHandInUi);
 
     }
     int calculateHandValue(Player player) {
@@ -122,7 +122,7 @@ class Actions {
             }
         return cardUi;
     }
-    private void printCardsSideBySide(List<String> handInUi, List<Card> cards) {
+    private void printCardsSideBySide(List<String> handInUi) {
         String[][] allCardsLinesSplit = new String[handInUi.size()][];
 
         // split each card into lines

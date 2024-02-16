@@ -70,12 +70,20 @@ public class PlayerService {
     public long getMoney(Player player) {
         return player.getMoney();
     }
-    public void adjustMoneyAndEarnings(Player player, long value) {
-        if (player.getIsWonTieLose() > 0)  // when initially setting the bet,the money gets reduced the amount
-            player.adjustMoneyAndEarnings(value * 2);
+    public void adjustMoneyAndEarnings(Player player, long bet) {
+        int playerWisLoses = player.getIsWonTieLose();
+
+        if (playerWisLoses > 0)
+            player.adjustMoneyAndEarnings(bet * (playerWisLoses * 2L));
+        else if (playerWisLoses < 0)
+            player.setEarnings(player.getEarnings() + (bet * playerWisLoses));
         else
-            player.setEarnings(player.getEarnings() + value); // + because value is negative if they lose
+            if (!player.getSplitHand().isEmpty())
+                player.setMoney(player.getMoney() + (bet * 2L));
+            else
+                player.setMoney(player.getMoney() + bet);
     }
+
     public boolean setBet(Player player, long amount) {
         if (hasEnoughMoney(player, amount)) {
             player.setBet(amount);

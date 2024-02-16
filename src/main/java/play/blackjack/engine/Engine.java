@@ -82,6 +82,10 @@ public class Engine {
 
             System.out.println("Your Cards are: ");
             actions.seeHand(theUserPlayer);
+            if (!theUserPlayer.getSplitHand().isEmpty()){
+                System.out.println("Your Split hand is :");
+                actions.seeSplitHand(theUserPlayer);
+            }
             UserInterface.printDashes(15);
             System.out.println("Dealer Cards are: ");
             actions.seeHand(preGame.getDealer());
@@ -127,9 +131,11 @@ public class Engine {
             }
             actions.hit(dealer, theUserPlayer);
             System.out.println("Dealer Draw a card, His new cards are...");
-            actions.seeDealersHand(dealer);
+            actions.seeDealerHand(dealer);
             UserInterface.printDashes();
         }
+        System.out.println("Round is over");
+        UserInterface.printDashes();
     }
 }
 

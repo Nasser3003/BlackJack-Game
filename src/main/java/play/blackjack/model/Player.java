@@ -65,19 +65,14 @@ public class Player {
         this.money = money;
     }
     public void hit(Card card) {
-        if (playedSplitSoNextCardInHandIsHidden())
-            card.setHidden(true);
         hit(hand, card);
     }
     public void hitSplit(Card card) {
-        if (playedSplitSoNextCardInSplitHandIsHidden())
-            card.setHidden(true);
         hit(splitHand, card);
     }
     public void split() {
-        Card c = hand.remove(0);
-        c.setHidden(false);
-        splitHand.add(c);
+        splitHand.add(hand.remove(0));
+        money -= bet;
         passSplitHand = false;
     }
     public void stay() {
@@ -92,12 +87,6 @@ public class Player {
     }
     private void hit(List<Card> hand, Card card) {
         hand.add(card);
-    }
-    private boolean playedSplitSoNextCardInHandIsHidden() {
-        return getSplitHand().size() == 1;
-    }
-    private boolean playedSplitSoNextCardInSplitHandIsHidden() {
-        return getHand().size() == 1 && !getSplitHand().isEmpty();
     }
     public void flushPlayerGameStats() {
         hand = new ArrayList<>(6);
