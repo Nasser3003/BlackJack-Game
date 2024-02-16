@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import play.blackjack.cards.Card;
 import play.blackjack.cards.Deck;
+import play.blackjack.cards.ENUMS.ECardRank;
 import play.blackjack.model.Player;
 import play.blackjack.repository.PlayerRepository;
 
@@ -44,7 +45,7 @@ public class PlayerService {
             System.out.println("You can't request card for your Split Hand");
     }
     public void split(Player player) {
-        if (player.getHand().get(0).getRankAsInt() != player.getHand().get(1).getRankAsInt())
+        if (player.getHand().get(0).getRank() != player.getHand().get(1).getRank())
             System.out.println("Cant split, you dont have a pair");
         else if (getBet(player) > getMoney(player)) {
             System.out.println("Cant split, you dont have the bet amount");
@@ -52,9 +53,11 @@ public class PlayerService {
             player.split();
         }
     }
+
     public long getBet(Player player) {
         return player.getBet();
     }
+
     public void stay(Player player) {
         player.stay();
     }
